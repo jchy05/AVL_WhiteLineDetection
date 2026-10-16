@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "avl-white-line-detection"
+version = "0.1.0"
+description = "Portable white-line detection, tracking and ROS 2 image adapter for AVL"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.21,<3"]
+
+[project.optional-dependencies]
+desktop = ["opencv-python>=4.8,<5"]
+headless = ["opencv-python-headless>=4.8,<5"]
+test = ["pytest>=7,<10"]
+
+[project.scripts]
+avl-lines = "avl_white_lines.cli:main"
+avl-lines-ros = "avl_white_lines.ros_node:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+avl_white_lines = ["default.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -2,6 +2,14 @@
 
 Development date: 2026-10-16. See [machine-readable timing](development_benchmark.json).
 
+## October 19 original-program audit
+
+The initial checks below describe the rewritten detector, not proof of equivalence to the original viewer. That was a gap in the initial handoff.
+
+The original viewer is now included separately. All six detection/display/state function or class definitions (except startup/output handling in `main`) were verified identical to the working original through Python AST comparison. Twelve raw frames spanning the sequence were compared across all three modes and both ROI settings: **72 cases, with all 17 stage images and each final image pixel-identical** on the same OpenCV 4.13.0 runtime. See [transfer verification](original_transfer_verification.json). This does not assert equivalence for the experimental tracked/ROS path.
+
+The expanded local suite passes 32 tests, adding native-resolution original processing, original keyboard behavior, complete original stage export, and a simulated desktop workflow that changes stage/mode/image/ROI and saves output. The tracked viewer now restores uppercase controls, stage explanations, source-image labels and separate final-image snapshots. GUI event simulation is not a physical-display or robot hardware test.
+
 ## Functional checks
 
 - 28 automated tests passed locally: exact mask selection, filtered pixels, ROI exclusion, independent nearby markings, blank input, geometric ID continuity across old bin boundaries, one-to-one matching, confirmation, missed-frame invalidation, expiry, smoothing on known injected jitter, timestamp resets/freshness, latest-frame overwrite, video decode, JSONL schema and frame limits.

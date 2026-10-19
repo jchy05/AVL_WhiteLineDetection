@@ -1,8 +1,23 @@
 # AVL_WhiteLineDetection
 
-White-line perception for MARVIN: the three saved color filters, all 17 inspection stages, independent line hypotheses, persistent IDs, time-based smoothing, and a ROS 2 image adapter. Runs on CPU with OpenCV; no neural-network weights or GPU setup required.
+White-line perception for MARVIN, with two explicitly separate programs:
 
-**Start with [Robot setup](docs/ROBOT_SETUP.md)** for the Jetson/ZED X. The code publishes perception only. Image-coordinate lines are not steering commands or ground-plane lane boundaries.
+- **Original viewer (start here):** the working frame-by-frame detector from this chat, with the same grouping/fitting, native image resolution, three filters and 17 stages.
+- **Experimental tracked version:** a rewritten detector with independent line hypotheses, persistent IDs and a ROS 2 adapter. Its results differ from the original.
+
+The initial upload omitted the original viewer. It is now restored; see the [handoff correction](docs/ORIGINAL_PROGRAM.md) for exactly what changed. Runs on CPU with OpenCV; no neural-network weights or GPU setup required.
+
+## Run the original program
+
+After installing desktop dependencies (`python -m pip install -e ".[desktop]"`), run:
+
+```bash
+python lane_pipeline_viewer.py /path/to/original_raw_frames
+```
+
+On Windows, double-click **Start Lane Viewer.cmd** and select the raw-image folder. With an installed package, `avl-lines-original /path/to/images` does the same. The original detector is unchanged; input/output locations are portable. `--export` saves all stages of the first frame.
+
+For the **experimental tracked ROS adapter**, use [Robot setup](docs/ROBOT_SETUP.md). That adapter is not the original detector and has not been tested on the physical Jetson/ZED X. The code publishes perception only. Image-coordinate lines are not steering commands or ground-plane lane boundaries.
 
 ## On the robot
 
@@ -24,10 +39,10 @@ python -m venv .venv
 # Linux/macOS: source .venv/bin/activate
 # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install -e ".[desktop]"
-python -m avl_white_lines.cli --images /path/to/raw_frames
+python lane_pipeline_viewer.py /path/to/raw_frames
 ```
 
-Use `--play` for tracked sequence playback. Manual A/D browsing resets tracking because skipped/reversed images do not represent a continuous camera stream. Initial detections are tentative until observed three consecutive times.
+For the separate tracked version, use `avl-lines-tracked --images /path/to/raw_frames --play` (or `python -m avl_white_lines.cli`). Manual A/D browsing resets tracking because skipped/reversed images do not represent a continuous camera stream. Initial detections are tentative until observed three consecutive times. That behavior differs from the original viewer, which draws per-frame fits immediately.
 
 ```bash
 python -m avl_white_lines.cli --video recording.mp4
@@ -38,7 +53,7 @@ python -m avl_white_lines.cli --images /path/to/raw_frames --headless \
 
 ZED X GMSL cameras should use the existing ZED ROS driver, rather than assuming they are USB camera index 0. Headless installations can use `.[headless]` instead of `.[desktop]`; install only one OpenCV wheel variant. On the robot use the system OpenCV and plain `-e .`.
 
-## Controls
+## Tracked-version controls
 
 | Key | Action |
 | --- | --- |

@@ -1,6 +1,7 @@
 import argparse
 from dataclasses import asdict
 import json
+import math
 from pathlib import Path
 import sys
 import time
@@ -10,6 +11,7 @@ from .config import MODES,load_config,save_config
 from .detector import STAGES,detect,render
 from .tracking import Tracker
 from .capture import LatestCapture
+from .original_viewer import STAGES as ORIGINAL_STAGE_INFO
 
 def panel(image,title,width=560):
     if image.ndim==2: image=cv2.cvtColor(image,cv2.COLOR_GRAY2BGR)
@@ -19,11 +21,15 @@ def panel(image,title,width=560):
     cv2.putText(out,title,(8,22),cv2.FONT_HERSHEY_SIMPLEX,.5,(255,255,255),1,cv2.LINE_AA)
     return out
 
-def compose(result,tracks,stage,cfg):
+def compose(result,tracks,stage,cfg,source=''):
     final=render(result,tracks)
-    top=np.hstack([panel(result.original,'Original'),panel(result.stages[STAGES[stage]],f'{stage+1}/17 {STAGES[stage]}'),panel(final,'Tracked / '+cfg.mode)])
-    footer=np.zeros((75,top.shape[1],3),np.uint8)
+    top=np.hstack([panel(result.original,'Original / '+source),panel(result.stages[STAGES[stage]],f'{stage+1}/17 {STAGES[stage]}'),panel(final,'Tracked / '+cfg.mode)])
+    footer=np.zeros((100,top.shape[1],3),np.uint8)
+    description=dict(ORIGINAL_STAGE_INFO)[STAGES[stage]]
+    if STAGES[stage]=='Active color mask': description=f'Current mask: {cfg.mode}. M changes the mask used by following stages.'
+    if STAGES[stage]=='Accepted segments': description='Experimental geometric consensus: independent hypotheses, then temporal association; differs from original grouping.'
     texts=["I/O: stage | M: mask | R: ROI | A/D or arrows: image | Space: play/pause | T: reset tracks | S: snapshot | Q/Esc: quit",
+           description,
            f"{result.processing_ms:.1f} ms detection | tracks {len(tracks)} | valid {sum(t['valid'] for t in tracks)} | gray dashed = held, invalid"]
     for i,text in enumerate(texts): cv2.putText(footer,text,(8,25+i*28),cv2.FONT_HERSHEY_SIMPLEX,.5,(230,230,230),1)
     return np.vstack([top,footer])
@@ -41,14 +47,14 @@ def main(argv=None):
     p.add_argument('--benchmark',type=Path,help='Save local timing summary; not a robot-speed claim')
     p.add_argument('--save-config',type=Path,help='Write effective settings at startup')
     args=p.parse_args(argv)
-    if args.fps<=0 or args.frames<0: p.error('fps must be positive and frames must be nonnegative')
+    if not math.isfinite(args.fps) or args.fps<=0 or args.frames<0: p.error('fps must be finite and positive and frames must be nonnegative')
     cfg=load_config(args.config)
     if args.mode: cfg.mode=args.mode
     if args.save_config: save_config(cfg,args.save_config)
     tracker=Tracker(cfg); source=None; cap=None
     files=[]
     if args.images:
-        files=sorted(x for x in args.images.rglob('*') if x.suffix.lower() in {'.jpg','.jpeg','.png','.bmp'})
+        files=sorted(x for x in args.images.rglob('*') if x.suffix.lower() in {'.jpg','.jpeg','.png','.bmp','.tif','.tiff','.webp'})
         if not files: p.error('No images found')
     elif args.video:
         cap=cv2.VideoCapture(str(args.video))
@@ -112,10 +118,13 @@ def main(argv=None):
             if not args.headless:
                 signature=(processed,stage,cfg.mode,cfg.roi_shape)
                 if signature!=painted:
-                    view=compose(result,tracks,stage,cfg)
+                    label=f'{idx+1}/{len(files)} {frame_source}' if files else frame_source
+                    view=compose(result,tracks,stage,cfg,label)
                     cv2.imshow('AVL WhiteLineDetection',view)
                     painted=signature
-                key=cv2.waitKeyEx(max(1,int(1000/args.fps)) if playing and not source else 20)
+                remaining_ms=1000/args.fps-(time.perf_counter()-loop_start)*1000
+                key=cv2.waitKeyEx(max(1,round(remaining_ms)) if playing and not source else 20)
+                if ord('A')<=key<=ord('Z'): key+=ord('a')-ord('A')
                 if key in (27,ord('q')) or cv2.getWindowProperty('AVL WhiteLineDetection',cv2.WND_PROP_VISIBLE)<1: break
                 if key==ord('i'): stage=(stage-1)%len(STAGES)
                 if key==ord('o'): stage=(stage+1)%len(STAGES)
@@ -132,6 +141,8 @@ def main(argv=None):
                     out=Path('results'); out.mkdir(exist_ok=True); stem=f'frame_{idx:06}_{cfg.mode}_{stage+1}'
                     cv2.imwrite(str(out/(stem+'.jpg')),view)
                     cv2.imwrite(str(out/(stem+'_stage.png')),result.stages[STAGES[stage]])
+                    cv2.imwrite(str(out/(stem+'_final.png')),render(result,tracks))
+                    (out/(stem+'_metadata.json')).write_text(json.dumps(payload,indent=2,allow_nan=False)+'\n')
                     save_config(cfg,out/'effective_config.json')
             if playing:
                 if files or cap: idx+=1

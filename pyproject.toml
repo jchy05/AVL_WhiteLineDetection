@@ -16,6 +16,8 @@ test = ["pytest>=7,<10"]
 
 [project.scripts]
 avl-lines = "avl_white_lines.cli:main"
+avl-lines-original = "avl_white_lines.original_viewer:main"
+avl-lines-tracked = "avl_white_lines.cli:main"
 avl-lines-ros = "avl_white_lines.ros_node:main"
 
 [tool.setuptools.packages.find]

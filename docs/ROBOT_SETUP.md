@@ -1,5 +1,7 @@
 # Transfer and run on MARVIN
 
+**This guide runs the rewritten tracked detector, not the restored original viewer.** For matching the original results first, use [Original program](ORIGINAL_PROGRAM.md). The ROS adapter remains untested on the physical robot.
+
 The bookmarked AVROS repository documents Jetson Orin / JetPack 6, ZED X cameras and ROS 2 Jazzy/Humble. That is evidence about the project, not a live inventory of your robot. Verify the installed distro and topics before running. No SSH or robot connection was available during development.
 
 ## 1. Get the repository

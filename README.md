@@ -24,6 +24,8 @@ The repo includes your unchanged raw frames **0, 410, 474, 710 and 1077**, resul
 
 Requires Python 3.10 or newer. Run these commands from the repository folder. For download instructions or troubleshooting, use [Beginner setup](docs/START_HERE.md).
 
+Interactive mode requires a working graphical desktop. In an SSH session, container or no-display sandbox, use `--export` for saved images instead; see [no-display setup](docs/START_HERE.md#ssh-containers-sandboxes-or-machines-without-a-display).
+
 **Windows PowerShell:**
 
 ```powershell

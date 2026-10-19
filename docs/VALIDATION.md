@@ -2,6 +2,19 @@
 
 Development date: 2026-10-16. See [machine-readable timing](development_benchmark.json).
 
+## External evaluation reported October 19
+
+The user supplied an independent fresh-Linux-venv evaluation with Python 3.13, OpenCV 4.14.0 and NumPy 2.5.4. This environment was **reported by the evaluator, not recreated during this documentation update**. It reported:
+
+- Desktop/test installation succeeded and 35 tests passed.
+- The original viewer's no-window export produced all 17 stages and the final overlay; frame 0 showed left/right lane fits.
+- The tracked CLI completed all three modes with five JSONL rows each.
+- The interactive command failed because the sandbox lacked a usable display, with Qt/xcb display initialization messages. Live GUI keyboard behavior was not verified there.
+- All five separated samples reported no confirmed tracks. This is not a tracking-accuracy test or proof of an execution error.
+- ROS 2/ZED and the physical robot were not tested.
+
+Repository visibility was separately checked through GitHub and is public. The stale private-repository instructions were corrected. The guide now separates interactive-desktop requirements from no-window export/headless checks and explains why a pipeline's `tail` exit status is not evidence of viewer success. No detection code was changed for these documentation corrections.
+
 ## October 19 original-program audit
 
 The initial checks below describe the rewritten detector, not proof of equivalence to the original viewer. That was a gap in the initial handoff.

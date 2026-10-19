@@ -4,7 +4,7 @@ This is the recommended first run for a new person. You do not need ROS, a robot
 
 ## 1. Get the files
 
-The repository is private, so your GitHub account needs access. On GitHub choose **Code → Download ZIP**, unzip it, and open the extracted folder. Or clone it:
+The repository is public; no GitHub sign-in is needed to download or clone it. On GitHub choose **Code → Download ZIP**, unzip it, and open the extracted folder. Or clone it:
 
 ```bash
 git clone https://github.com/jchy05/AVL_WhiteLineDetection.git
@@ -42,6 +42,20 @@ python3 -m venv .venv
 ```
 
 These desktop instructions are for a computer with a display. For the Jetson's ROS environment, use [Robot setup](ROBOT_SETUP.md) instead of installing desktop OpenCV wheels over ROS libraries.
+
+### SSH, containers, sandboxes or machines without a display
+
+The interactive command opens a native OpenCV window. Installing `.[desktop]` does not provide a display server. A Linux session without a usable graphical display can abort with `qt.qpa.xcb: could not connect to display` or an xcb plugin initialization message. That message alone does not mean the detector or installation failed; additional Qt/system-library problems are also possible on a desktop.
+
+For a no-window check in the environment installed above, run:
+
+```bash
+.venv/bin/python lane_pipeline_viewer.py examples/raw --export --output-dir results/original
+```
+
+This exports all 17 stages of the first sample plus its final overlay. It does not open a window or require keyboard controls. For a dedicated no-display environment, install `.[headless]` instead of `.[desktop]` in a separate venv and use export/headless commands only. `opencv-python-headless` cannot show the interactive viewer; swapping it in does not make GUI mode work without a display.
+
+To test the actual window and keyboard controls, use a working desktop session with display access. A successful export does not verify the GUI or ROS/ZED hardware.
 
 ## 4. Check what you see
 
@@ -91,9 +105,12 @@ Use the local environment's Python executable from step 3 if it is not activated
 | `python` is not found or opens the Store | Install/configure Python first, then reopen the terminal. |
 | `No module named cv2` or `numpy` | Run the install command with the same `.venv` Python you use to launch. |
 | Window/GUI support error | Use a desktop installation. Do not install both `opencv-python` and `opencv-python-headless` in the same environment; a fresh desktop `.venv` is the easiest starting point. |
+| `qt.qpa.xcb: could not connect to display` | Check whether the session has a usable graphical display. In a no-display sandbox/SSH session, use `--export` instead of the interactive viewer. |
 | Folder picker is unavailable | Pass the image folder explicitly; the picker optionally uses Tkinter. |
 | No images found | Check the path and current folder; `examples/raw` is relative to the repository root. |
 | Keys do nothing | Click the image window first. Space/T belong to the tracked version, not this viewer. |
 | Results look different | Check that you launched `lane_pipeline_viewer.py`, not `avl-lines`/`avl-lines-tracked`; compare the same raw file, mode and ROI. |
 
 Next: [understand the stages](PIPELINE.md) or [find the source code](REPOSITORY_GUIDE.md). Tracking/video and robot work have [separate experimental instructions](TRACKED_VERSION.md).
+
+When recording failures, capture the viewer process's exit code directly. For example, in Bash, `command >run.log 2>&1; status=$?; tail run.log; exit "$status"` preserves the command's status. The status of `command | tail` normally belongs to `tail`, so a printed zero may not mean the viewer succeeded.

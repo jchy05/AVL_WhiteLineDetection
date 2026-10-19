@@ -38,6 +38,12 @@ For a dedicated standalone headless environment, install `.[headless]` instead o
 
 Use sequential playback to evaluate tracking. Manual A/D browsing resets history, so detections become tentative again. Default confirmation requires three consecutive observations. The checked-in samples are widely separated frames and are useful for mask inspection; playing just those five does not represent a continuous real-time recording.
 
+### Why the five samples can all report `detected: false`
+
+`detected` means at least one **confirmed, freshly measured, sufficiently supported track**, not that the frame contained no white pixels or line segments. A run over just frames 0, 410, 474, 710 and 1077 may produce five successful JSONL rows with `detected: false` throughout. Large changes between these scenes can prevent three matching consecutive observations. Inspect `tracks`, their `status`/`hits`, and the original viewer's masks for per-frame evidence. No confirmed track does not by itself mean the CLI failed.
+
+To evaluate tracking, supply your own consecutive frames, a real recording via `--video`, or live camera input. A synthetic sequential-video test checks the confirmation mechanism in the test suite, but does not establish performance on the robot. Do not lower confirmation thresholds just to make the five separated samples report success.
+
 The final panel uses tracked estimates. Colored lines are freshly measured and confirmed; gray dashed lines are tentative or briefly held and marked invalid. The fitted-line inspection stage shows the unsmoothed per-frame estimate.
 
 ## Settings

@@ -6,14 +6,14 @@ The bookmarked AVROS repository documents Jetson Orin / JetPack 6, ZED X cameras
 
 ## 1. Get the repository
 
-On the robot, authenticate your own GitHub account (or a read-only deploy key), then:
+The repository is public. Clone it on the robot without GitHub authentication:
 
 ```bash
 git clone https://github.com/jchy05/AVL_WhiteLineDetection.git
 cd AVL_WhiteLineDetection
 ```
 
-It is private. If credentials are inconvenient, copy and unzip the supplied source archive instead. It contains the same code and configuration; no recordings are needed to run live.
+Alternatively, copy and unzip the supplied source archive. It contains the same code and configuration; no recordings are needed to run live. Authentication is only needed for operations that require write access, such as pushing changes.
 
 ## 2. Discover the installation
 

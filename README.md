@@ -7,6 +7,20 @@ White-line perception for MARVIN, with two explicitly separate programs:
 
 The initial upload omitted the original viewer. It is now restored; see the [handoff correction](docs/ORIGINAL_PROGRAM.md) for exactly what changed. Runs on CPU with OpenCV; no neural-network weights or GPU setup required.
 
+## Your five raw frames and their results
+
+**[View frames 0, 410, 474, 710 and 1077, with all three filter results](examples/README.md).** The repository now includes those five original raw JPEGs unchanged, fifteen full-resolution final PNGs, and all 17 stage previews. The rest of the 1,078-frame recording is still excluded.
+
+Open `examples/gallery.html` from a downloaded copy for an offline interactive comparison (A/D images, I/O stages, M filters). Or run the original viewer directly on the included frames:
+
+```bash
+python lane_pipeline_viewer.py examples/raw
+```
+
+On Windows, **Show Sample Frames.cmd** opens those five included frames directly after desktop dependencies are installed.
+
+These results use the restored original detector at native input resolution, not the rewritten tracked pipeline. The example page displays failures as well as successful fits.
+
 ## Run the original program
 
 After installing desktop dependencies (`python -m pip install -e ".[desktop]"`), run:
@@ -117,7 +131,7 @@ Use independent settings and tracker instances for each camera. The retained Sav
 
 The JSON `color_bounds` contains editable lower/upper channel bounds for all three modes. Article/Saved HSL use H,L,S order; Previous HSV uses H,S,V. These ship with the exact values above. If you change them for a camera, save that camera's JSON alongside its deployment settings.
 
-See [Output contract](docs/OUTPUT_SCHEMA.md), [validation](docs/VALIDATION.md), and [hardware/source notes](docs/HARDWARE_SOURCES.md). Recorded images, machine-specific paths, credentials and runtime logs are excluded from Git.
+See [Output contract](docs/OUTPUT_SCHEMA.md), [validation](docs/VALIDATION.md), and [hardware/source notes](docs/HARDWARE_SOURCES.md). Apart from the five explicitly included sample frames and their generated results, recordings, machine-specific paths, credentials and runtime logs are excluded from Git.
 
 ## Limits and next deployment step
 

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVL — original frames and masks</title>
+<style>
+body{margin:0;background:#101419;color:#ecf0f5;font:16px system-ui,sans-serif}main{max-width:1900px;margin:auto;padding:24px}h1{font-size:25px;margin:0 0 8px}p{color:#b5c1cf;line-height:1.5}nav{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:22px 0}select,button{background:#202b38;color:#fff;border:1px solid #526071;border-radius:6px;padding:10px;font-size:15px}label{display:flex;gap:8px;align-items:center}.panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}figure{margin:0;background:#080b10;border:1px solid #34404e;border-radius:8px;overflow:hidden}figcaption{padding:12px;color:#d2dce8}img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#000}a{color:#8ec7ff}#description{min-height:24px}small{color:#b5c1cf}@media(max-width:900px){.panels{grid-template-columns:1fr}}
+</style>
+<main><h1>Original raw frames · original detector</h1>
+<p>Frames 0, 410, 474, 710 and 1077. Native-resolution processing, no tracking. The final result always follows the selected filter; I/O changes only the inspected stage.</p>
+<nav><label>Frame <select id="frame"></select></label><label>Filter <select id="mode"></select></label><button id="previous">I · Previous stage</button><select id="stage" aria-label="Processing stage"></select><button id="next">O · Next stage</button></nav>
+<div class="panels"><figure><figcaption>Original raw JPEG</figcaption><img id="raw" alt="Original raw frame"></figure><figure><figcaption id="stageTitle"></figcaption><img id="mask" alt="Selected processing stage"></figure><figure><figcaption id="finalTitle"></figcaption><img id="final" alt="Final detection overlay"></figure></div>
+<p id="description"></p><p id="stats"></p><p id="downloads"></p>
+<small>A/D: previous/next frame · I/O: previous/next stage · M: next filter. Stage previews are 640 pixels wide; full-resolution final PNGs and original JPEGs are linked above. All detections, including errors, are shown without manual correction.</small></main>
+<script src="manifest.js"></script><script>
+const $=id=>document.getElementById(id);let frameIndex=0,modeIndex=0,stageIndex=8;
+EXAMPLES.frames.forEach((f,i)=>$('frame').add(new Option(f.frame,i)));
+EXAMPLES.frames[0].modes.forEach((m,i)=>$('mode').add(new Option(m.title,i)));
+EXAMPLES.stage_names.forEach((s,i)=>$('stage').add(new Option(`${i+1}/17 · ${s}`,i)));
+function update(){const f=EXAMPLES.frames[frameIndex],m=f.modes[modeIndex];$('frame').value=frameIndex;$('mode').value=modeIndex;$('stage').value=stageIndex;$('raw').src=f.raw;$('mask').src=m.stages[stageIndex];$('final').src=m.final;$('stageTitle').textContent=EXAMPLES.stage_names[stageIndex];$('finalTitle').textContent='Final · '+m.title;$('description').textContent=EXAMPLES.stage_descriptions[stageIndex];$('stats').textContent=`Frame ${f.frame} · ${EXAMPLES.roi} · Hough segments: ${m.details.segments} · Accepted by group: ${m.details.accepted_by_group.join(', ')} · Fits: ${m.details.fitted_groups}`;$('downloads').replaceChildren();[[f.raw,'Original JPEG'],[m.final,'Full-resolution final PNG'],[f.comparison,'All three filters']].forEach(([url,text],i)=>{if(i)$('downloads').append(' · ');const a=document.createElement('a');a.href=url;a.textContent=text;$('downloads').append(a)});}
+function stage(delta){stageIndex=(stageIndex+delta+17)%17;update()}
+$('frame').onchange=e=>{frameIndex=Number(e.target.value);update()};$('mode').onchange=e=>{modeIndex=Number(e.target.value);update()};$('stage').onchange=e=>{stageIndex=Number(e.target.value);update()};$('previous').onclick=()=>stage(-1);$('next').onclick=()=>stage(1);
+document.addEventListener('keydown',e=>{if(['SELECT','INPUT'].includes(e.target.tagName))return;const k=e.key.toLowerCase();if(k==='i')stage(-1);else if(k==='o')stage(1);else if(k==='m'){modeIndex=(modeIndex+1)%3;update()}else if(k==='a'||k==='d'){frameIndex=(frameIndex+(k==='a'?-1:1)+5)%5;update()}});update();
+</script></html>

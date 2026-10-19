@@ -10,6 +10,8 @@ The original viewer is now included separately. All six detection/display/state 
 
 The expanded local suite passes 32 tests, adding native-resolution original processing, original keyboard behavior, complete original stage export, and a simulated desktop workflow that changes stage/mode/image/ROI and saves output. The tracked viewer now restores uppercase controls, stage explanations, source-image labels and separate final-image snapshots. GUI event simulation is not a physical-display or robot hardware test.
 
+Five requested raw frames (0, 410, 474, 710, 1077) are now included unchanged, with results from the original detector for all three modes and all 17 stage previews. Source-byte equality was checked locally; raw SHA-256 hashes are included in the example manifest. Three additional tests verify the exact sample set, image/result links, output dimensions and offline manifest, bringing the local suite to 35 tests. The offline gallery's A/D, I/O and M keys were exercised in the browser. Gallery previews are resized only after native-resolution detection; full-resolution final PNGs are provided.
+
 ## Functional checks
 
 - 28 automated tests passed locally: exact mask selection, filtered pixels, ROI exclusion, independent nearby markings, blank input, geometric ID continuity across old bin boundaries, one-to-one matching, confirmation, missed-frame invalidation, expiry, smoothing on known injected jitter, timestamp resets/freshness, latest-frame overwrite, video decode, JSONL schema and frame limits.

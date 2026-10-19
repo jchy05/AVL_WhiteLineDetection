@@ -26,7 +26,7 @@ For a GUI-free first-frame export:
 python lane_pipeline_viewer.py /path/to/raw_images --export --output-dir results/original
 ```
 
-Use identical source files, filter mode, ROI setting, and OpenCV version for an exact comparison. Raw images remain excluded from Git; altered/compressed input images can also change detections.
+Use identical source files, filter mode, ROI setting, and OpenCV version for an exact comparison. Five requested raw images are now included under `examples/raw/`; the rest of the recording remains excluded. Altered/compressed input images can also change detections.
 
 ## Rewritten tracked version remains separate
 

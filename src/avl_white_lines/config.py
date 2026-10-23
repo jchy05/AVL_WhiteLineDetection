@@ -8,6 +8,23 @@ MODES = ("article_hsl_white", "previous_hsv", "saved_hsl")
 
 @dataclass
 class Config:
+    backend: str = "legacy_hough"
+    camera: dict | str = field(default_factory=dict)
+    line_width_min_m: float = .025
+    line_width_max_m: float = .15
+    minimum_length_m: float = .30
+    maximum_range_m: float = 12.0
+    ridge_threshold_high: float = .22
+    ridge_threshold_low: float = .10
+    side_log_threshold: float = .10
+    use_depth_gate: bool = True
+    ground_live: bool = True
+    ground_every: int = 15
+    depth_confirm: float = .5
+    object_height_m: float = .04
+    depth_vote: float = .3
+    metric_association_gate_m: float = .35
+    tracking_enabled: bool = True
     mode: str = "article_hsl_white"
     processing_width: int = 960
     roi_top: float = .4
@@ -41,6 +58,19 @@ class Config:
             if isinstance(value,(float,int)) and not math.isfinite(value): raise ValueError(f"Non-finite {name}")
         for name in ("processing_width","blur_kernel","canny_low","canny_high","hough_threshold","min_line_length","max_line_gap","max_lines","max_candidates","confirm_hits"):
             if type(getattr(self,name)) is not int: raise ValueError(f"{name} must be an integer")
+        if self.backend not in ('legacy_hough','marvin_ridge','hybrid_fallback'): raise ValueError('Invalid backend')
+        if self.backend != 'legacy_hough':
+            from .camera import camera_from_config
+            camera_from_config(self.camera)
+        if not 0 < self.line_width_min_m < self.line_width_max_m: raise ValueError('Invalid physical width')
+        for name in ('minimum_length_m','maximum_range_m','object_height_m','metric_association_gate_m','side_log_threshold'):
+            if getattr(self,name)<=0: raise ValueError(name)
+        if not 0 < self.ridge_threshold_low <= self.ridge_threshold_high: raise ValueError('Invalid ridge thresholds')
+        if type(self.ground_every) is not int or self.ground_every<1: raise ValueError('Invalid ground_every')
+        for name in ('depth_confirm','depth_vote'):
+            if not 0<=getattr(self,name)<=1: raise ValueError(name)
+        for name in ('ground_live','use_depth_gate','tracking_enabled'):
+            if type(getattr(self,name)) is not bool: raise ValueError(name)
         if self.mode not in MODES: raise ValueError(f"mode must be one of {MODES}")
         if set(self.color_bounds)!=set(MODES): raise ValueError("color_bounds must contain exactly the three retained modes")
         for name,bounds in self.color_bounds.items():

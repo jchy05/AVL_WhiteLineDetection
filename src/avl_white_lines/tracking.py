@@ -1,5 +1,5 @@
 """One-to-one geometric association and time-based smoothing, with explicit expiry."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import math
 import numpy as np
 from .detector import Observation
@@ -22,6 +22,9 @@ class Tracker:
         self.tracks = []; self.last_time = None
 
     def update(self,observations,timestamp):
+        if not self.cfg.tracking_enabled:
+            self.reset()
+            return []
         if not math.isfinite(timestamp): raise ValueError("timestamp must be finite")
         if self.last_time is not None and (timestamp<=self.last_time or timestamp-self.last_time>self.cfg.reset_gap_seconds): self.reset()
         dt = timestamp-self.last_time if self.last_time is not None else 1/30
@@ -32,6 +35,13 @@ class Tracker:
         pairs=[]
         for i,t in enumerate(self.tracks):
             for j,o in enumerate(observations):
+                if t.line.centerline_ground or o.centerline_ground:
+                    if t.line.centerline_ground and o.centerline_ground:
+                        from .components import metric_cost
+                        cost=metric_cost(t.line,o,self.cfg.metric_association_gate_m)
+                        if cost is not None: pairs.append((cost,i,j))
+                    continue
+                if t.line.backend != o.backend: continue
                 y0,y1 = max(t.line.y_min,o.y_min),min(t.line.y_max,o.y_max)
                 if y1-y0<.03: continue
                 ys = np.array([y0,y1])
@@ -45,7 +55,14 @@ class Tracker:
             if i in used_t or j in used_o: continue
             used_t.add(i); used_o.add(j)
             t,o = self.tracks[i],observations[j]
+            previous=t.line
             t.line = Observation((1-alpha)*t.line.a+alpha*o.a,(1-alpha)*t.line.b+alpha*o.b,o.y_min,o.y_max,o.confidence,o.support)
+            if o.centerline_ground:
+                from .components import smooth_points
+                t.line=replace(o, a=t.line.a,b=t.line.b,
+                    centerline_ground=smooth_points(previous.centerline_ground,o.centerline_ground,alpha),
+                    centerline_image=smooth_points(previous.centerline_image,o.centerline_image,alpha))
+            else: t.line.backend=o.backend
             t.last_seen=timestamp; t.hits+=1; t.streak+=1; t.measured=True
             t.confirmed = t.confirmed or t.streak>=self.cfg.confirm_hits
         for i,t in enumerate(self.tracks):
@@ -61,4 +78,8 @@ class Tracker:
             valid = t.confirmed and t.measured and confidence>=self.cfg.min_confidence
             output.append(dict(id=t.identity,a=t.line.a,b=t.line.b,y_min=t.line.y_min,y_max=t.line.y_max,
                                confidence=confidence,valid=bool(valid),status=status,age_seconds=age,hits=t.hits))
+            from .components import component_dict
+            extra=component_dict(t.line,t.identity)
+            extra.pop('confidence'); extra.pop('id')
+            output[-1].update(extra)
         return output

@@ -1,0 +1,79 @@
+{
+  "backend": "hybrid_fallback",
+  "camera": "marvin_front",
+  "line_width_min_m": 0.025,
+  "line_width_max_m": 0.15,
+  "minimum_length_m": 0.3,
+  "maximum_range_m": 12.0,
+  "ridge_threshold_high": 0.22,
+  "ridge_threshold_low": 0.1,
+  "side_log_threshold": 0.1,
+  "use_depth_gate": true,
+  "ground_live": true,
+  "ground_every": 15,
+  "depth_confirm": 0.5,
+  "object_height_m": 0.04,
+  "depth_vote": 0.3,
+  "metric_association_gate_m": 0.35,
+  "tracking_enabled": true,
+  "mode": "article_hsl_white",
+  "processing_width": 480,
+  "roi_top": 0.4,
+  "roi_shape": "rectangle",
+  "blur_kernel": 11,
+  "canny_low": 50,
+  "canny_high": 150,
+  "hough_threshold": 15,
+  "min_line_length": 20,
+  "max_line_gap": 10,
+  "consensus_distance": 0.008,
+  "min_vertical_span": 0.08,
+  "foreground_y": 0.7,
+  "max_lines": 4,
+  "max_candidates": 160,
+  "association_gate": 0.1,
+  "smoothing_seconds": 0.08,
+  "confirm_hits": 3,
+  "hold_seconds": 0.15,
+  "reset_gap_seconds": 0.5,
+  "min_confidence": 0.25,
+  "max_frame_age_seconds": 0.25,
+  "color_bounds": {
+    "article_hsl_white": [
+      [
+        0,
+        200,
+        0
+      ],
+      [
+        180,
+        255,
+        255
+      ]
+    ],
+    "previous_hsv": [
+      [
+        0,
+        0,
+        195
+      ],
+      [
+        180,
+        30,
+        255
+      ]
+    ],
+    "saved_hsl": [
+      [
+        0,
+        59,
+        0
+      ],
+      [
+        36,
+        205,
+        40
+      ]
+    ]
+  }
+}

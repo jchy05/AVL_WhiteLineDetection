@@ -24,7 +24,7 @@ avl-lines-ros = "avl_white_lines.ros_node:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-avl_white_lines = ["default.json"]
+avl_white_lines = ["default.json", "MARVIN_PROVENANCE.md"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -1,5 +1,5 @@
 """Deterministic per-frame pipeline; no fixed left/center/right bins."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import time
 import cv2
 import numpy as np
@@ -20,6 +20,14 @@ class Observation:
     confidence: float
     support: int
 
+    backend: str = "legacy_hough"
+    centerline_ground: list = field(default_factory=list)
+    centerline_image: list = field(default_factory=list)
+    length_m: float = 0.0
+    width_m: float = 0.0
+    heading_rad: float = 0.0
+    depth_confirmed: bool = False
+
     def x(self,y): return self.a*y+self.b
 
 @dataclass
@@ -30,6 +38,9 @@ class FrameResult:
     roi: np.ndarray
     processing_ms: float
     raw_segments: int
+    mask: np.ndarray | None = None
+    backend: str = "legacy_hough"
+    ground_estimate: dict = field(default_factory=dict)
 
 def extract_observations(segments, width, height, cfg):
     """Repeated consensus finds separate line hypotheses before temporal association."""
@@ -73,7 +84,7 @@ def extract_observations(segments, width, height, cfg):
         seg,length = seg[~selected],length[~selected]
     return observations,accepted
 
-def detect(frame, cfg: Config, debug=False):
+def legacy_detect(frame, cfg: Config, debug=False):
     started = time.perf_counter()
     if frame is None or frame.ndim!=3 or frame.shape[2]!=3 or frame.dtype!=np.uint8:
         raise ValueError("Expected uint8 BGR frame")
@@ -119,6 +130,11 @@ def line_color(identity):
 def draw_line(image,line,color,held=False):
     h,w = image.shape[:2]
     # Draw only through supported height, plus a small foreground extension.
+    if line.centerline_image:
+        pts = (np.asarray(line.centerline_image)*[w-1,h-1]).astype(np.int32)
+        for i in range(len(pts)-1):
+            if not held or i%2==0: cv2.line(image,tuple(pts[i]),tuple(pts[i+1]),color,3,cv2.LINE_AA)
+        return
     ys = np.linspace(line.y_min,min(1,line.y_max+.03),28)
     pts = np.column_stack([np.clip(line.a*ys+line.b,-2,3)*(w-1),ys*(h-1)]).astype(np.int32)
     for i in range(len(pts)-1):
@@ -128,6 +144,7 @@ def render(result, tracks):
     overlay = result.original.copy(); h,w = overlay.shape[:2]
     for track in tracks:
         obs = Observation(track['a'],track['b'],track['y_min'],track['y_max'],track['confidence'],0)
+        obs.centerline_image = track.get('centerline_image',[])
         color = line_color(track['id']) if track['valid'] else (150,150,150)
         draw_line(overlay,obs,color,held=not track['valid'])
         y = min(.95,obs.y_max); x = int(np.clip(obs.x(y),0,.9)*(w-1))
@@ -135,3 +152,30 @@ def render(result, tracks):
     # Preserve clean geometry inside the requested ROI.
     overlay[result.roi==0] = result.original[result.roi==0]
     return overlay
+
+
+class Detector:
+    """One persistent instance per camera; owns live ground history, not tracking."""
+    def __init__(self, cfg):
+        self.cfg = cfg
+        self.ridge = None
+
+    def detect(self, frame, debug=False, depth=None):
+        if self.cfg.backend == 'legacy_hough':
+            return legacy_detect(frame, self.cfg, debug)
+        if self.ridge is None:
+            from .physical import PhysicalDetector
+            self.ridge = PhysicalDetector(self.cfg)
+        result = self.ridge.detect(frame, depth, debug)
+        if self.cfg.backend == 'hybrid_fallback' and not any(o.confidence >= self.cfg.min_confidence for o in result.observations):
+            result = legacy_detect(frame, self.cfg, debug)
+            result.backend = 'legacy_hough_fallback'
+            for o in result.observations:
+                o.confidence *= .5
+                o.backend = result.backend
+        return result
+
+
+def detect(frame, cfg, debug=False, depth=None):
+    """Stateless compatibility API. Streaming clients should keep a Detector."""
+    return Detector(cfg).detect(frame, debug, depth)

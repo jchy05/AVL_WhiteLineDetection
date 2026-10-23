@@ -2,6 +2,10 @@
 
 Find white road markings and inspect each processing stage beside the original image and the final detection. Start with the **original image viewer** below. It uses native-resolution images, three filters, and 17 processing stages.
 
+## Calibrated ridge detection
+
+The new `marvin_ridge` backend combines Marvin's physical ridge filters with AVL tracking, curved ground centerlines, depth/live-ground support and 15 inspection stages. Use it as the production candidate after calibration and robot validation. `legacy_hough` remains the compatibility default; `hybrid_fallback` explicitly labels and discounts Hough fallback. [Setup, commands, calibration and limits](docs/RIDGE_BACKEND.md).
+
 ## Choose a starting point
 
 | I want to… | Start here |

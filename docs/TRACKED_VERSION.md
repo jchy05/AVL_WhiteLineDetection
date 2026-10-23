@@ -61,3 +61,7 @@ Settings cover processing width, ROI, color bounds, blur/Canny/Hough values, can
 - Camera input uses one latest-frame slot; ROS uses a depth-one image subscription and rejects old input or missed deadlines.
 
 The detector still fits straight lines, not curved ground-plane lanes. It does not infer a drivable corridor, convert pixels to meters, fuse cameras, or publish steering commands. Smoothing introduces delay and cannot fix incorrect color selection. Use [Validation](VALIDATION.md) for measured development timing and outstanding robot checks, and [Output schema](OUTPUT_SCHEMA.md) before consuming detections.
+
+## Metric and curved tracking
+
+The description above covers the legacy Hough/original paths. The calibrated ridge backend adds physical components, sampled curves, metric tracking, optional registered depth and live ground estimation. See [ridge backend](RIDGE_BACKEND.md) for commands, stages and limits, and [benchmark data](../validation/backend_benchmark.json) for measured synthetic checks and unlabeled real smoke tests. Existing defaults and original reference images remain unchanged in behavior.

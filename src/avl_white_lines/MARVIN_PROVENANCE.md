@@ -1,0 +1,1 @@
+Adapted from arassal/Marvin_White_Line at d6aa919877a853511518f556b56d0bec62a4676f (white_line/cameras.py, ground_fit.py, white_ridge.py). Upstream contains no license file; licensing status is unspecified by the upstream repository. AVL adaptations add diagnostics, symmetric depth confirmation and bounds checks.

@@ -51,3 +51,7 @@ The tracked detector resizes input to a configured width (default 960), extracts
 Tracking can reduce jitter but cannot restore pixels rejected by a color threshold. Shadows, glare and camera auto-exposure can change masks. There are no labeled lane annotations in this repo, so examples and confidence scores are not measured accuracy.
 
 For tracking settings, see [Tracked version](TRACKED_VERSION.md). For the robot's required live checks, see [Robot setup](ROBOT_SETUP.md).
+
+## Calibrated physical pipeline
+
+The description above covers the legacy Hough/original paths. The calibrated ridge backend adds physical components, sampled curves, metric tracking, optional registered depth and live ground estimation. See [ridge backend](RIDGE_BACKEND.md) for commands, stages and limits, and [benchmark data](../validation/backend_benchmark.json) for measured synthetic checks and unlabeled real smoke tests. Existing defaults and original reference images remain unchanged in behavior.

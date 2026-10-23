@@ -55,3 +55,7 @@ Compute time excludes image decoding, disk JSONL writes and display; full replay
 - Camera exposure stability and per-camera thresholds in actual field conditions.
 
 Tracking reduces injected jitter in a controlled test. This is not a claim that flicker is eliminated on all recorded scenes. The detector still uses fixed color thresholds and straight local fits. Use the robot setup guide to complete live validation before integrating with a controller.
+
+## Ridge integration validation
+
+The description above covers the legacy Hough/original paths. The calibrated ridge backend adds physical components, sampled curves, metric tracking, optional registered depth and live ground estimation. See [ridge backend](RIDGE_BACKEND.md) for commands, stages and limits, and [benchmark data](../validation/backend_benchmark.json) for measured synthetic checks and unlabeled real smoke tests. Existing defaults and original reference images remain unchanged in behavior.

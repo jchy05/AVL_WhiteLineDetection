@@ -24,3 +24,13 @@ Invalid ROS statuses (`no_fresh_frame`, `stale_or_invalid_stamp`, `processing_de
 Standalone timestamps: image/video replay uses frame index divided by supplied/inferred FPS, not wall time; camera mode uses monotonic arrival time at `read()`. This cannot prove the sensor itself is not buffering. ROS uses the actual image header and ROS clock; replay must use a consistent clock.
 
 Held tracks are for debugging/short visual continuity and always invalid. Even a `measured` track can have `valid=false` if confidence falls. A downstream consumer should use an explicit source-time deadline and clear state on invalid messages or missing output. Output delivery is best effort with depth one.
+
+## Additive ridge fields (schema version 1 retained)
+
+Existing keys retain their meaning. Consumers should ignore unknown keys. Frame output adds `backend`, `processing_image_size`, `ground_estimate`, and `components`. Component IDs are frame-local; track IDs remain session-local. Components are single-frame evidence; `detected` still requires a confirmed current valid track. Components do not acquire track validity implicitly.
+
+Components and tracks add `backend`, `centerline_ground` (list of [X forward, Y left] metres), `centerline_image` (normalized [x,y] samples), `length_m`, `width_m`, `heading_rad` (overall chord heading from forward toward left), and `depth_confirmed`. `local_headings_rad` contains one tangent heading per sampled centerline point. `a,b` remain the best straight approximation in normalized image coordinates and cannot represent the curve. Legacy/fallback centerlines are empty, physical lengths/widths are zero (unavailable), and depth confirmation is false. Fallback is tagged `legacy_hough_fallback` and its confidence is halved.
+
+`ground_estimate` provides height, downward pitch, live-estimate state, whether this frame accepted a fit, and depth availability/gating state. It is not a robot/map transform. Binary masks are available from the Python FrameResult and ROS mono8 topic, not embedded in JSON. Python masks have processing dimensions; ROS resizes to native source size. Track fields/centerline_image are resolution independent.
+
+Stale input/deadline failures still publish invalid empty tracks with zero validity duration in ROS. CLI camera deadline failures clear tracks and set `processing_deadline_missed`. Held tracks are never current valid measurements. Consumers of standalone mask topics must enforce header freshness as well. See [ridge backend](RIDGE_BACKEND.md).

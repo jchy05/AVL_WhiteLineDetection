@@ -25,6 +25,7 @@ class Config:
     depth_vote: float = .3
     metric_association_gate_m: float = .35
     tracking_enabled: bool = True
+    component_policy: str = "diagnostic"
     mode: str = "article_hsl_white"
     processing_width: int = 960
     roi_top: float = .4
@@ -58,6 +59,7 @@ class Config:
             if isinstance(value,(float,int)) and not math.isfinite(value): raise ValueError(f"Non-finite {name}")
         for name in ("processing_width","blur_kernel","canny_low","canny_high","hough_threshold","min_line_length","max_line_gap","max_lines","max_candidates","confirm_hits"):
             if type(getattr(self,name)) is not int: raise ValueError(f"{name} must be an integer")
+        if self.component_policy not in ('diagnostic','strict'): raise ValueError('Invalid component_policy')
         if self.backend not in ('legacy_hough','marvin_ridge','hybrid_fallback'): raise ValueError('Invalid backend')
         if self.backend != 'legacy_hough':
             from .camera import camera_from_config

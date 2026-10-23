@@ -27,6 +27,7 @@ class Observation:
     width_m: float = 0.0
     heading_rad: float = 0.0
     depth_confirmed: bool = False
+    quality_flags: list = field(default_factory=list)
 
     def x(self,y): return self.a*y+self.b
 
@@ -41,6 +42,7 @@ class FrameResult:
     mask: np.ndarray | None = None
     backend: str = "legacy_hough"
     ground_estimate: dict = field(default_factory=dict)
+    diagnostics: dict = field(default_factory=dict)
 
 def extract_observations(segments, width, height, cfg):
     """Repeated consensus finds separate line hypotheses before temporal association."""

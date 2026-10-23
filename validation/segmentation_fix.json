@@ -1,0 +1,986 @@
+{
+  "baseline_before_fix": "811cac1",
+  "pixel_parity": [
+    {
+      "frame": "frame_000000",
+      "marvin_pixels": 3588,
+      "before_fix_pixels": 3307,
+      "after_fix_pixels": 3588,
+      "removed_pixels_after": 0,
+      "added_pixels_after": 0
+    },
+    {
+      "frame": "frame_000410",
+      "marvin_pixels": 2740,
+      "before_fix_pixels": 1443,
+      "after_fix_pixels": 2740,
+      "removed_pixels_after": 0,
+      "added_pixels_after": 0
+    },
+    {
+      "frame": "frame_000474",
+      "marvin_pixels": 4727,
+      "before_fix_pixels": 2080,
+      "after_fix_pixels": 4727,
+      "removed_pixels_after": 0,
+      "added_pixels_after": 0
+    },
+    {
+      "frame": "frame_000710",
+      "marvin_pixels": 3792,
+      "before_fix_pixels": 3354,
+      "after_fix_pixels": 3792,
+      "removed_pixels_after": 0,
+      "added_pixels_after": 0
+    },
+    {
+      "frame": "frame_001077",
+      "marvin_pixels": 2406,
+      "before_fix_pixels": 2735,
+      "after_fix_pixels": 2406,
+      "removed_pixels_after": 0,
+      "added_pixels_after": 0
+    }
+  ],
+  "matched_width_comparison": {
+    "note": "Identical externally resized 480px BGR input, same calibration, no live fitting, no tuning. Real preset assumed, not verified; real accuracy unknown. Legacy is an Article HSL fitted-line raster, not a semantic paint mask. Detection timing excludes resizing, rendering, tracking, capture and ROS. Algorithm order rotates every repeat.",
+    "python": "3.14.6",
+    "opencv": "4.13.0",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "groups": {
+      "real_unlabeled": {
+        "camera": {
+          "fx": 181.2,
+          "fy": 181.2,
+          "cx": 242.0,
+          "cy": 153.3,
+          "ref_width": 480,
+          "ref_height": 300,
+          "height_m": 0.62,
+          "pitch_deg": 20.7
+        },
+        "timing": {
+          "Marvin standalone": {
+            "mean_ms": 47.293022870352225,
+            "p50_ms": 48.47959999460727,
+            "p95_ms": 52.710120007395744,
+            "samples": 35
+          },
+          "AVL ridge": {
+            "mean_ms": 102.47451999956476,
+            "p50_ms": 101.5742999734357,
+            "p95_ms": 126.21720000170168,
+            "samples": 35
+          },
+          "AVL legacy Hough": {
+            "mean_ms": 5.104805725360555,
+            "p50_ms": 5.0020000198856,
+            "p95_ms": 5.850640032440423,
+            "samples": 35
+          }
+        },
+        "frames": [
+          {
+            "name": "frame_000000",
+            "mask_pixels": {
+              "Marvin standalone": 3588,
+              "AVL ridge": 3588,
+              "AVL legacy Hough": 3408
+            },
+            "avl_components": 14,
+            "legacy_lines": 4,
+            "avl_retained_marvin_pixels": 3588,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0
+          },
+          {
+            "name": "frame_000410",
+            "mask_pixels": {
+              "Marvin standalone": 2740,
+              "AVL ridge": 2740,
+              "AVL legacy Hough": 1859
+            },
+            "avl_components": 12,
+            "legacy_lines": 2,
+            "avl_retained_marvin_pixels": 2740,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0
+          },
+          {
+            "name": "frame_000474",
+            "mask_pixels": {
+              "Marvin standalone": 4727,
+              "AVL ridge": 4727,
+              "AVL legacy Hough": 3476
+            },
+            "avl_components": 16,
+            "legacy_lines": 3,
+            "avl_retained_marvin_pixels": 4727,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0
+          },
+          {
+            "name": "frame_000710",
+            "mask_pixels": {
+              "Marvin standalone": 3792,
+              "AVL ridge": 3792,
+              "AVL legacy Hough": 3108
+            },
+            "avl_components": 11,
+            "legacy_lines": 4,
+            "avl_retained_marvin_pixels": 3792,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0
+          },
+          {
+            "name": "frame_001077",
+            "mask_pixels": {
+              "Marvin standalone": 2406,
+              "AVL ridge": 2406,
+              "AVL legacy Hough": 2859
+            },
+            "avl_components": 8,
+            "legacy_lines": 4,
+            "avl_retained_marvin_pixels": 2406,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0
+          }
+        ]
+      },
+      "synthetic": {
+        "camera": {
+          "fx": 320.2,
+          "fy": 320.2,
+          "cx": 234.2,
+          "cy": 153.8,
+          "ref_width": 480,
+          "ref_height": 300,
+          "height_m": 0.61,
+          "pitch_deg": 20.5
+        },
+        "timing": {
+          "Marvin standalone": {
+            "mean_ms": 34.02754286190077,
+            "p50_ms": 31.29750001244247,
+            "p95_ms": 48.943579988554106,
+            "samples": 49
+          },
+          "AVL ridge": {
+            "mean_ms": 42.42266734054654,
+            "p50_ms": 41.09660000540316,
+            "p95_ms": 61.46899999585,
+            "samples": 49
+          },
+          "AVL legacy Hough": {
+            "mean_ms": 3.3515510054267184,
+            "p50_ms": 3.2832000870257616,
+            "p95_ms": 4.122220003046095,
+            "samples": 49
+          }
+        },
+        "frames": [
+          {
+            "name": "tape",
+            "mask_pixels": {
+              "Marvin standalone": 627,
+              "AVL ridge": 627,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 1,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 627,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 493,
+                "fp": 134,
+                "fn": 60,
+                "precision": 0.7862838915470495,
+                "recall": 0.891500904159132
+              },
+              "AVL ridge": {
+                "tp": 493,
+                "fp": 134,
+                "fn": 60,
+                "precision": 0.7862838915470495,
+                "recall": 0.891500904159132
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 553,
+                "precision": null,
+                "recall": 0.0
+              }
+            }
+          },
+          {
+            "name": "shadow",
+            "mask_pixels": {
+              "Marvin standalone": 0,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          },
+          {
+            "name": "curve",
+            "mask_pixels": {
+              "Marvin standalone": 949,
+              "AVL ridge": 949,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 1,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 949,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 663,
+                "fp": 286,
+                "fn": 6,
+                "precision": 0.6986301369863014,
+                "recall": 0.9910313901345291
+              },
+              "AVL ridge": {
+                "tp": 663,
+                "fp": 286,
+                "fn": 6,
+                "precision": 0.6986301369863014,
+                "recall": 0.9910313901345291
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 669,
+                "precision": null,
+                "recall": 0.0
+              }
+            }
+          },
+          {
+            "name": "crack",
+            "mask_pixels": {
+              "Marvin standalone": 0,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          },
+          {
+            "name": "joint",
+            "mask_pixels": {
+              "Marvin standalone": 0,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          },
+          {
+            "name": "narrow",
+            "mask_pixels": {
+              "Marvin standalone": 426,
+              "AVL ridge": 426,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 1,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 426,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 426,
+                "fn": 0,
+                "precision": 0.0,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 426,
+                "fn": 0,
+                "precision": 0.0,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          },
+          {
+            "name": "oversize",
+            "mask_pixels": {
+              "Marvin standalone": 0,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          }
+        ]
+      },
+      "synthetic_depth": {
+        "camera": {
+          "fx": 320.2,
+          "fy": 320.2,
+          "cx": 234.2,
+          "cy": 153.8,
+          "ref_width": 480,
+          "ref_height": 300,
+          "height_m": 0.61,
+          "pitch_deg": 20.5
+        },
+        "timing": {
+          "Marvin standalone": {
+            "mean_ms": 36.85375716027227,
+            "p50_ms": 36.79760009981692,
+            "p95_ms": 41.56379995401949,
+            "samples": 21
+          },
+          "AVL ridge": {
+            "mean_ms": 45.62387618214069,
+            "p50_ms": 44.13860000204295,
+            "p95_ms": 53.19360003340989,
+            "samples": 21
+          },
+          "AVL legacy Hough": {
+            "mean_ms": 2.99524285808383,
+            "p50_ms": 3.0001000268384814,
+            "p95_ms": 3.2863999949768186,
+            "samples": 21
+          }
+        },
+        "frames": [
+          {
+            "name": "on_ground",
+            "mask_pixels": {
+              "Marvin standalone": 627,
+              "AVL ridge": 627,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 1,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 627,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 493,
+                "fp": 134,
+                "fn": 60,
+                "precision": 0.7862838915470495,
+                "recall": 0.891500904159132
+              },
+              "AVL ridge": {
+                "tp": 493,
+                "fp": 134,
+                "fn": 60,
+                "precision": 0.7862838915470495,
+                "recall": 0.891500904159132
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 553,
+                "precision": null,
+                "recall": 0.0
+              }
+            }
+          },
+          {
+            "name": "raised_white_object",
+            "mask_pixels": {
+              "Marvin standalone": 0,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 0,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          },
+          {
+            "name": "behind_ground_plane",
+            "mask_pixels": {
+              "Marvin standalone": 627,
+              "AVL ridge": 0,
+              "AVL legacy Hough": 0
+            },
+            "avl_components": 0,
+            "legacy_lines": 0,
+            "avl_retained_marvin_pixels": 0,
+            "avl_removed_marvin_pixels": 627,
+            "avl_added_pixels": 0,
+            "pixel_metrics": {
+              "Marvin standalone": {
+                "tp": 0,
+                "fp": 627,
+                "fn": 0,
+                "precision": 0.0,
+                "recall": null
+              },
+              "AVL ridge": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              },
+              "AVL legacy Hough": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 0,
+                "precision": null,
+                "recall": null
+              }
+            }
+          }
+        ]
+      }
+    },
+    "avl_source_sha256": {
+      "camera.py": "b7799c44c8190b399bab968ca79a676b23b967b02af02ea6c833cb28dc110cb2",
+      "capture.py": "cee946640ebcbeeaa9cc77fdec7aeb0993fd14c520af35823003f5738ba4e8cf",
+      "cli.py": "65db18ad479fba503801ce90c0bdce7d2ff41eb8ca0c8d96b0e496176e794ba9",
+      "components.py": "fa3156b8a40b12668e3fd65e43fcfdd4576afa28b84557e2e5cfe8a15b384e74",
+      "config.py": "10079d7c06ba262667d59e3ffcb905a8702d83b81bc8a53120a18269da0f40ed",
+      "detector.py": "f1cdb489f7b3b54654be60bf4ca55108180454d89aebe4dfdd9e8264015e1b1b",
+      "ground.py": "8a9557c669b9f828ce4c3e302a17f3c80ddab0c3e1dd27f40e42dc0482d5bd0d",
+      "original_viewer.py": "d7671787e17241683f924440c786aa30362f569dd14f053f45272231b3b579c2",
+      "physical.py": "a657deb7de80709f4a5d730319b5ddfd1873297954d1bff7d4557177f621c0ed",
+      "ridge.py": "e05d25c9bd566c0211d03bea7a4d74d1c0114f123c0fce59455921586c49bfb8",
+      "ros_node.py": "3e63f3b6bcc8617073dda9600c065e8043baaf6839445ec38e43c68fc8e4a05e",
+      "tracking.py": "ef4aa636eceb2e52f138fb32b4cf3f1ba146922bbf85520423c8c1da2f2b6279",
+      "__init__.py": "df3587a20f110c0f04ab9ecbe9e72288641170890b0153adf3bb7979ff36732f"
+    },
+    "marvin_source_sha256": {
+      "cameras.py": "5d1bc87edf21d948554e720d579ebe473ddb9832bfff4022cad2aecab4e44418",
+      "ground_fit.py": "8a9557c669b9f828ce4c3e302a17f3c80ddab0c3e1dd27f40e42dc0482d5bd0d",
+      "pipeline.py": "cd3303a5468413ed62222fe927e5d6e83a379ccd5c22764e9a72e5a41e0c5025",
+      "white_ridge.py": "ffe5bf2a751db6a330bd4db3c21de6973e356ded5bc64f85eec467ad9b180fac",
+      "__init__.py": "fd0cc04c7effc4c1302d41b6b31ea065c76ade27fbe1355aafd1fa033a199a6b"
+    }
+  },
+  "native_input_comparison": {
+    "note": "Primary views use original 1280x720 input, original AVL unchanged at native resolution, both ridge backends internally width 480. No depth or tracking, no live fitting, same unverified marvin_front calibration. Secondary timing sends identical 480px images to all three, changing original AVL pixel-scale behavior. Original process always constructs its 17 stages and overlay; workloads differ. No real ground truth or camera calibration: no accuracy ranking.",
+    "python": "3.14.6",
+    "opencv": "4.13.0",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "camera": {
+      "fx": 181.2,
+      "fy": 181.2,
+      "cx": 242.0,
+      "cy": 153.3,
+      "ref_width": 480,
+      "ref_height": 300,
+      "height_m": 0.62,
+      "pitch_deg": 20.7
+    },
+    "timing": {
+      "native_inputs": {
+        "Marvin": {
+          "mean_ms": 48.72637714724988,
+          "p50_ms": 48.08580002281815,
+          "p95_ms": 58.736970031168305,
+          "samples": 35
+        },
+        "Old AVL original": {
+          "mean_ms": 88.90369999155935,
+          "p50_ms": 84.23509995918721,
+          "p95_ms": 117.02078996459015,
+          "samples": 35
+        },
+        "New AVL ridge": {
+          "mean_ms": 102.84103427880576,
+          "p50_ms": 99.50529993511736,
+          "p95_ms": 123.38623998221006,
+          "samples": 35
+        }
+      },
+      "shared_480_inputs": {
+        "Marvin": {
+          "mean_ms": 47.529802860559094,
+          "p50_ms": 43.18829998373985,
+          "p95_ms": 59.3029699870385,
+          "samples": 35
+        },
+        "Old AVL original": {
+          "mean_ms": 15.046799991146795,
+          "p50_ms": 14.195999945513904,
+          "p95_ms": 17.55079000722617,
+          "samples": 35
+        },
+        "New AVL ridge": {
+          "mean_ms": 104.59205427739236,
+          "p50_ms": 98.28209993429482,
+          "p95_ms": 144.11314001772544,
+          "samples": 35
+        }
+      }
+    },
+    "frames": [
+      {
+        "frame": "frame_000000",
+        "input_size": [
+          1280,
+          720
+        ],
+        "source_sha256": "a0a3a7f270f4294ac4e62d2e9a6d27287646c824331961054e9f34973ef30fc8",
+        "marvin_mask_pixels": 25495,
+        "new_avl_mask_pixels": 25495,
+        "new_avl_components": 14,
+        "old_modes": [
+          {
+            "mode": "Article HSL white",
+            "reference_pixel_identical": true,
+            "segments": 54,
+            "accepted_by_group": [
+              19,
+              0,
+              10
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Previous HSV",
+            "reference_pixel_identical": true,
+            "segments": 50,
+            "accepted_by_group": [
+              18,
+              0,
+              9
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Saved HSL",
+            "reference_pixel_identical": true,
+            "segments": 107,
+            "accepted_by_group": [
+              30,
+              0,
+              11
+            ],
+            "fitted_groups": 2
+          }
+        ]
+      },
+      {
+        "frame": "frame_000410",
+        "input_size": [
+          1280,
+          720
+        ],
+        "source_sha256": "3a0b5c26d0ed1447a1e293f731fbc1644e78b821b3e7e97bf27b9f310215e988",
+        "marvin_mask_pixels": 19487,
+        "new_avl_mask_pixels": 19487,
+        "new_avl_components": 12,
+        "old_modes": [
+          {
+            "mode": "Article HSL white",
+            "reference_pixel_identical": true,
+            "segments": 50,
+            "accepted_by_group": [
+              0,
+              8,
+              11
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Previous HSV",
+            "reference_pixel_identical": true,
+            "segments": 59,
+            "accepted_by_group": [
+              0,
+              6,
+              10
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Saved HSL",
+            "reference_pixel_identical": true,
+            "segments": 141,
+            "accepted_by_group": [
+              0,
+              7,
+              18
+            ],
+            "fitted_groups": 2
+          }
+        ]
+      },
+      {
+        "frame": "frame_000474",
+        "input_size": [
+          1280,
+          720
+        ],
+        "source_sha256": "9ca54ab010763c543728294e930eb231e46ab8ad12b81a189aace58baf03fec1",
+        "marvin_mask_pixels": 33582,
+        "new_avl_mask_pixels": 33582,
+        "new_avl_components": 16,
+        "old_modes": [
+          {
+            "mode": "Article HSL white",
+            "reference_pixel_identical": true,
+            "segments": 59,
+            "accepted_by_group": [
+              5,
+              0,
+              27
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Previous HSV",
+            "reference_pixel_identical": true,
+            "segments": 55,
+            "accepted_by_group": [
+              5,
+              0,
+              19
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Saved HSL",
+            "reference_pixel_identical": true,
+            "segments": 155,
+            "accepted_by_group": [
+              6,
+              0,
+              18
+            ],
+            "fitted_groups": 2
+          }
+        ]
+      },
+      {
+        "frame": "frame_000710",
+        "input_size": [
+          1280,
+          720
+        ],
+        "source_sha256": "5a5d3c6569407c2962e09267475d70fae7c472c40713653538ba521629a8a1a5",
+        "marvin_mask_pixels": 26973,
+        "new_avl_mask_pixels": 26973,
+        "new_avl_components": 11,
+        "old_modes": [
+          {
+            "mode": "Article HSL white",
+            "reference_pixel_identical": true,
+            "segments": 74,
+            "accepted_by_group": [
+              11,
+              0,
+              16
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Previous HSV",
+            "reference_pixel_identical": true,
+            "segments": 76,
+            "accepted_by_group": [
+              9,
+              0,
+              20
+            ],
+            "fitted_groups": 2
+          },
+          {
+            "mode": "Saved HSL",
+            "reference_pixel_identical": true,
+            "segments": 166,
+            "accepted_by_group": [
+              7,
+              0,
+              18
+            ],
+            "fitted_groups": 2
+          }
+        ]
+      },
+      {
+        "frame": "frame_001077",
+        "input_size": [
+          1280,
+          720
+        ],
+        "source_sha256": "947a132cf89b6a88d28fdab7fc388dd8f74d24bcf176b1a369f7e8b8ab9684eb",
+        "marvin_mask_pixels": 17071,
+        "new_avl_mask_pixels": 17071,
+        "new_avl_components": 8,
+        "old_modes": [
+          {
+            "mode": "Article HSL white",
+            "reference_pixel_identical": true,
+            "segments": 75,
+            "accepted_by_group": [
+              3,
+              5,
+              8
+            ],
+            "fitted_groups": 3
+          },
+          {
+            "mode": "Previous HSV",
+            "reference_pixel_identical": true,
+            "segments": 53,
+            "accepted_by_group": [
+              6,
+              5,
+              7
+            ],
+            "fitted_groups": 3
+          },
+          {
+            "mode": "Saved HSL",
+            "reference_pixel_identical": true,
+            "segments": 154,
+            "accepted_by_group": [
+              4,
+              4,
+              7
+            ],
+            "fitted_groups": 3
+          }
+        ]
+      }
+    ],
+    "original_viewer_sha256": "d7671787e17241683f924440c786aa30362f569dd14f053f45272231b3b579c2"
+  },
+  "cold_five_frame_cli": {
+    "frames": 5,
+    "mode": "article_hsl_white",
+    "backend": "marvin_ridge",
+    "debug": false,
+    "mean_compute_ms": 192.46173999272287,
+    "p50_compute_ms": 171.90009995829314,
+    "p95_compute_ms": 309.82995997183025,
+    "compute_fps": 5.195837884650793,
+    "wall_seconds": 1.027434300049208,
+    "capture_frames_dropped": 0,
+    "note": "Compute includes detection + tracking and enabled debug construction; excludes decoding, export, logging and display. Not labeled accuracy.",
+    "config": {
+      "backend": "marvin_ridge",
+      "camera": "marvin_front",
+      "line_width_min_m": 0.025,
+      "line_width_max_m": 0.15,
+      "minimum_length_m": 0.3,
+      "maximum_range_m": 12.0,
+      "ridge_threshold_high": 0.22,
+      "ridge_threshold_low": 0.1,
+      "side_log_threshold": 0.1,
+      "use_depth_gate": true,
+      "ground_live": true,
+      "ground_every": 15,
+      "depth_confirm": 0.5,
+      "object_height_m": 0.04,
+      "depth_vote": 0.3,
+      "metric_association_gate_m": 0.35,
+      "tracking_enabled": true,
+      "component_policy": "diagnostic",
+      "mode": "article_hsl_white",
+      "processing_width": 480,
+      "roi_top": 0.4,
+      "roi_shape": "rectangle",
+      "blur_kernel": 11,
+      "canny_low": 50,
+      "canny_high": 150,
+      "hough_threshold": 15,
+      "min_line_length": 20,
+      "max_line_gap": 10,
+      "consensus_distance": 0.008,
+      "min_vertical_span": 0.08,
+      "foreground_y": 0.7,
+      "max_lines": 4,
+      "max_candidates": 160,
+      "association_gate": 0.1,
+      "smoothing_seconds": 0.08,
+      "confirm_hits": 3,
+      "hold_seconds": 0.15,
+      "reset_gap_seconds": 0.5,
+      "min_confidence": 0.25,
+      "max_frame_age_seconds": 0.25,
+      "color_bounds": {
+        "article_hsl_white": [
+          [
+            0,
+            200,
+            0
+          ],
+          [
+            180,
+            255,
+            255
+          ]
+        ],
+        "previous_hsv": [
+          [
+            0,
+            0,
+            195
+          ],
+          [
+            180,
+            30,
+            255
+          ]
+        ],
+        "saved_hsl": [
+          [
+            0,
+            59,
+            0
+          ],
+          [
+            36,
+            205,
+            40
+          ]
+        ]
+      }
+    }
+  }
+}

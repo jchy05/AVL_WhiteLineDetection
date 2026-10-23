@@ -1,5 +1,7 @@
 # Marvin, old AVL, and new AVL
 
+Historical comparison before the segmentation fix: the extra component gate and dilation regressions described here have since been corrected in the default policy. See [current behavior and measurements](SEGMENTATION_FIX.md).
+
 Here **old AVL means the original `lane_pipeline_viewer.py` / `original_viewer.process` program**, not the tracked legacy Hough rewrite used as the third column of the previous comparison. New AVL means the updated `marvin_ridge` backend plus its tracking/output framework. Marvin means the unmodified standalone upstream detector.
 
 ## What was compared

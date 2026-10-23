@@ -8,6 +8,8 @@ The new `marvin_ridge` backend combines Marvin's physical ridge filters with AVL
 
 See the [Marvin / original AVL / new AVL comparison](docs/THREE_VERSION_COMPARISON.md), or the [direct Marvin vs AVL comparison](docs/MARVIN_VS_AVL.md) for same-input timing, image results and observed regressions.
 
+The [segmentation fix and latest results](docs/SEGMENTATION_FIX.md) explain how the default RGB mask now preserves Marvin’s output while component checks remain visible as diagnostics.
+
 ## Choose a starting point
 
 | I want to… | Start here |

@@ -1,0 +1,48 @@
+{
+  "upstream_commit": "d6aa919877a853511518f556b56d0bec62a4676f",
+  "camera": {
+    "fx": 181.2,
+    "fy": 181.2,
+    "cx": 242.0,
+    "cy": 153.3,
+    "ref_width": 480,
+    "ref_height": 300,
+    "height_m": 0.62,
+    "pitch_deg": 20.7
+  },
+  "processing_width": 480,
+  "frames": [
+    {
+      "image": "frame_000000.jpg",
+      "image_sha256": "a0a3a7f270f4294ac4e62d2e9a6d27287646c824331961054e9f34973ef30fc8",
+      "mask_sha256": "916d56ab18595b45d9640a458dae1e0d17cea1debd698c5c83fb30f48e3c8cbc",
+      "mask_pixels": 3588
+    },
+    {
+      "image": "frame_000410.jpg",
+      "image_sha256": "3a0b5c26d0ed1447a1e293f731fbc1644e78b821b3e7e97bf27b9f310215e988",
+      "mask_sha256": "bf42988059b2a41a7433126825ee45b64315478320e2f176fef301472034cb1c",
+      "mask_pixels": 2740
+    },
+    {
+      "image": "frame_000474.jpg",
+      "image_sha256": "9ca54ab010763c543728294e930eb231e46ab8ad12b81a189aace58baf03fec1",
+      "mask_sha256": "c3361ff42214972413b88f0f2c5be1d47ee32dda83769a23d1ef9d402a0761be",
+      "mask_pixels": 4727
+    },
+    {
+      "image": "frame_000710.jpg",
+      "image_sha256": "5a5d3c6569407c2962e09267475d70fae7c472c40713653538ba521629a8a1a5",
+      "mask_sha256": "eaa20d24c525de50e353ff0b2535ca06b45b00c4bbf58dc886cc26bccfcb299a",
+      "mask_pixels": 3792
+    },
+    {
+      "image": "frame_001077.jpg",
+      "image_sha256": "947a132cf89b6a88d28fdab7fc388dd8f74d24bcf176b1a369f7e8b8ab9684eb",
+      "mask_sha256": "2d341daf2ef5d5aa0f7eb3ed0e2c58066513c8a07451032af5d3b0bcd093f192",
+      "mask_pixels": 2406
+    }
+  ],
+  "opencv": "4.13.0",
+  "platform": "Windows"
+}

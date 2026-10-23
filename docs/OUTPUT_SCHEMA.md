@@ -34,3 +34,9 @@ Components and tracks add `backend`, `centerline_ground` (list of [X forward, Y 
 `ground_estimate` provides height, downward pitch, live-estimate state, whether this frame accepted a fit, and depth availability/gating state. It is not a robot/map transform. Binary masks are available from the Python FrameResult and ROS mono8 topic, not embedded in JSON. Python masks have processing dimensions; ROS resizes to native source size. Track fields/centerline_image are resolution independent.
 
 Stale input/deadline failures still publish invalid empty tracks with zero validity duration in ROS. CLI camera deadline failures clear tracks and set `processing_deadline_missed`. Held tracks are never current valid measurements. Consumers of standalone mask topics must enforce header freshness as well. See [ridge backend](RIDGE_BACKEND.md).
+
+## Component policy and diagnostics
+
+`component_policy` defaults to `diagnostic`. The ridge mask keeps upstream segmentation, while additional component width/length estimates flag uncertain measurements and multiply their confidence by .75. `strict` opts into secondary component rejection. Both retain the upstream ridge/width/shade/color/length/depth gates.
+
+Frames add `diagnostics` with `component_policy` and per-component label, pixel count, processing-size bounding box, estimated width/length, flags and rejection state when available. `quality_flags` propagates through observations and tracks. A flagged track can be freshly measured/confirmed; that is not an assertion that its physical dimensions are reliable. Optional costmap point clouds exclude flagged tracks even when `valid=true` and depth-confirmed. Legacy tracks have an empty flag list. The final segmentation mask and tracked geometry remain separate outputs.

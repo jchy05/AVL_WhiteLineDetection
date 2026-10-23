@@ -51,7 +51,7 @@ class PhysicalDetector:
                             depth_vote=cfg.depth_vote,depth_confirm=cfg.depth_confirm,return_debug=True)
         # Component geometry uses the undilated accepted ridge core. Display mask
         # includes upstream's one-pixel dilation and can contain several fragments.
-        observations,labels,valid_labels=extract_components(info['depth_mask'],det,info)
+        observations,labels,valid_labels,component_diagnostics=extract_components(info['depth_mask'],det,info,cfg.component_policy)
         for o,label in zip(observations,valid_labels):
             if use_depth is not None:
                 # Core gate has already voted on ground support before creating observations.
@@ -60,8 +60,11 @@ class PhysicalDetector:
                 o.depth_confirmed=bool(np.mean(confirmed[pixels])>=max(cfg.depth_confirm,.01))
             else: o.confidence*=.85
         core=np.isin(labels,valid_labels)&(labels>0)
-        mask=cv2.dilate(core.astype(np.uint8),np.ones((3,3),np.uint8))>0
-        mask &= det.ground
+        if cfg.component_policy=='strict':
+            mask=cv2.dilate(core.astype(np.uint8),cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3)))>0
+            mask &= det.ground
+        # Otherwise retain the ridge operator's segmentation unchanged. The
+        # optional component measurements cannot silently delete image evidence.
         stages={}
         if debug:
             gray=lambda a: cv2.normalize(np.nan_to_num(a).astype(np.float32),None,0,255,cv2.NORM_MINMAX).astype(np.uint8)
@@ -73,10 +76,11 @@ class PhysicalDetector:
             values=[img,gray(info['logL']),binary(det.ground),gray(info['best']),gray(info['best_s']),
                 cv2.applyColorMap(gray(np.arctan2(info['ny'],info['nx'])),cv2.COLORMAP_HSV),
                 binary(info['width_gate']),binary(info['side_gate']),binary(info['color_gate']),binary(info['length_mask']),
-                binary(core),colors,np.zeros_like(img),binary(mask),overlay]
+                binary(info['depth_mask']),colors,np.zeros_like(img),binary(mask),overlay]
             stages=dict(zip(RIDGE_STAGES,values))
         estimate=dict(height_m=float(height),pitch_deg=float(pitch),live=self.estimate is not None,fit_accepted=fit_accepted,
                       depth_available=d is not None,depth_gate_applied=use_depth is not None,
                       coordinates='X forward, Y left, Z up; metres')
         return FrameResult(img,observations,stages,det.ground.astype(np.uint8)*255,(time.perf_counter()-start)*1000,0,
-                           mask.astype(np.uint8)*255,'marvin_ridge',estimate)
+                           mask.astype(np.uint8)*255,'marvin_ridge',estimate,
+                           dict(component_policy=cfg.component_policy,components=component_diagnostics))

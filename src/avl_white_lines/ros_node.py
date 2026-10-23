@@ -22,7 +22,7 @@ def depth_metres(array,encoding):
 def ground_cloud_points(tracks, require_depth=True):
     """Only fresh confirmed metric tracks may feed the optional costmap cloud."""
     return [(float(x),float(y),0.) for t in tracks
-            if t.get('valid') and t.get('backend')=='marvin_ridge' and (not require_depth or t.get('depth_confirmed'))
+            if t.get('valid') and not t.get('quality_flags') and t.get('backend')=='marvin_ridge' and (not require_depth or t.get('depth_confirmed'))
             for x,y in t.get('centerline_ground',[])]
 
 
@@ -148,7 +148,7 @@ def main(argv=None):
                           'published_stamp_sec':self.get_clock().now().nanoseconds/1e9,
                           'frame_age_seconds':age,'valid_for_seconds':max(0,self.cfg.max_frame_age_seconds-age),
                           'image_size':[msg.width,msg.height],'mode':self.cfg.mode,
-                          'processing_image_size':[result.original.shape[1],result.original.shape[0]],'backend':result.backend,'ground_estimate':result.ground_estimate,
+                          'processing_image_size':[result.original.shape[1],result.original.shape[0]],'backend':result.backend,'ground_estimate':result.ground_estimate,'diagnostics':result.diagnostics,
                           'components':[component_dict(o,i+1) for i,o in enumerate(result.observations)],
                           'processing_ms':result.processing_ms,'detected':any(t['valid'] for t in tracks),'tracks':tracks})
             if self.mask_pub.get_subscription_count()>0:

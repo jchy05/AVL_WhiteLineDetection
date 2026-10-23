@@ -135,7 +135,7 @@ def main(argv=None):
                          'image_size':[current.shape[1],current.shape[0]],'mode':cfg.mode,
                          'status':'processing_deadline_missed' if deadline_missed else 'ok','detected':any(t['valid'] for t in tracks),'tracks':tracks,
                          'processing_image_size':[result.original.shape[1],result.original.shape[0]],
-                         'backend':result.backend,'ground_estimate':result.ground_estimate,
+                         'backend':result.backend,'ground_estimate':result.ground_estimate,'diagnostics':result.diagnostics,
                          'components':[component_dict(o,i+1) for i,o in enumerate(result.observations)],
                          'processing_ms':times[-1],'dropped_capture_frames':dropped}
                 if args.export_dir:

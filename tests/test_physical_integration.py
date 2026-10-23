@@ -36,9 +36,9 @@ def test_dark_strips_rejected(kind):
 
 
 @pytest.mark.parametrize('width',[.01,.7])
-def test_out_of_band_bright_objects(width):
+def test_strict_policy_out_of_band_bright_objects(width):
     image,_=scene('straight',width)
-    assert np.count_nonzero(Detector(config()).detect(image).mask)<25
+    assert np.count_nonzero(Detector(config(component_policy='strict')).detect(image).mask)<25
 
 
 def test_curves_have_physical_geometry_and_visible_debug():

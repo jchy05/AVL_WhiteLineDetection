@@ -1,5 +1,7 @@
 # Standalone Marvin versus updated AVL
 
+Historical comparison before the segmentation fix: the extra component gate and dilation regressions described here have since been corrected in the default policy. See [current behavior and measurements](SEGMENTATION_FIX.md).
+
 Measured 2026-10-23, comparing upstream Marvin `d6aa919` with AVL's ridge integration `8fb2b5e`. AVL also retains its legacy Article HSL/Hough backend; that third baseline is included in every comparison image.
 
 **The updated AVL is not an established accuracy improvement over standalone Marvin.** It adds useful tracking/output/debugging infrastructure, but its extra component filters cost CPU and can reject real paint when calibration is wrong. Standalone Marvin is faster in this local comparison.

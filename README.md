@@ -6,6 +6,8 @@ Find white road markings and inspect each processing stage beside the original i
 
 The new `marvin_ridge` backend combines Marvin's physical ridge filters with AVL tracking, curved ground centerlines, depth/live-ground support and 15 inspection stages. Use it as the production candidate after calibration and robot validation. `legacy_hough` remains the compatibility default; `hybrid_fallback` explicitly labels and discounts Hough fallback. [Setup, commands, calibration and limits](docs/RIDGE_BACKEND.md).
 
+See the [direct Marvin vs AVL comparison](docs/MARVIN_VS_AVL.md) for same-input timing, image results and observed regressions.
+
 ## Choose a starting point
 
 | I want to… | Start here |

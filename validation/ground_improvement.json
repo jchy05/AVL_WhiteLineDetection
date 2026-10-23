@@ -1,0 +1,333 @@
+{
+  "note": "Recording-specific crop excludes the upper 55% and can remove far paint. Background-band counts and five sparse near-paint checkpoints are not full-frame precision/recall. Navigation blocked by default unverified model and absent registered depth.",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "opencv": "4.13.0",
+  "profiles": {
+    "full": {
+      "backend": "marvin_ridge",
+      "camera": "marvin_front",
+      "line_width_min_m": 0.025,
+      "line_width_max_m": 0.15,
+      "minimum_length_m": 0.3,
+      "maximum_range_m": 12.0,
+      "ridge_threshold_high": 0.22,
+      "ridge_threshold_low": 0.1,
+      "side_log_threshold": 0.1,
+      "use_depth_gate": true,
+      "ground_live": true,
+      "ground_every": 15,
+      "depth_confirm": 0.5,
+      "object_height_m": 0.04,
+      "depth_vote": 0.3,
+      "metric_association_gate_m": 0.35,
+      "tracking_enabled": true,
+      "component_policy": "diagnostic",
+      "image_roi": [],
+      "calibration_verified": false,
+      "calibration_id": "",
+      "ground_frame_id": "",
+      "mode": "article_hsl_white",
+      "processing_width": 480,
+      "roi_top": 0.4,
+      "roi_shape": "rectangle",
+      "blur_kernel": 11,
+      "canny_low": 50,
+      "canny_high": 150,
+      "hough_threshold": 15,
+      "min_line_length": 20,
+      "max_line_gap": 10,
+      "consensus_distance": 0.008,
+      "min_vertical_span": 0.08,
+      "foreground_y": 0.7,
+      "max_lines": 4,
+      "max_candidates": 160,
+      "association_gate": 0.1,
+      "smoothing_seconds": 0.08,
+      "confirm_hits": 3,
+      "hold_seconds": 0.15,
+      "reset_gap_seconds": 0.5,
+      "min_confidence": 0.25,
+      "max_frame_age_seconds": 0.25,
+      "color_bounds": {
+        "article_hsl_white": [
+          [
+            0,
+            200,
+            0
+          ],
+          [
+            180,
+            255,
+            255
+          ]
+        ],
+        "previous_hsv": [
+          [
+            0,
+            0,
+            195
+          ],
+          [
+            180,
+            30,
+            255
+          ]
+        ],
+        "saved_hsl": [
+          [
+            0,
+            59,
+            0
+          ],
+          [
+            36,
+            205,
+            40
+          ]
+        ]
+      }
+    },
+    "recording_review": {
+      "backend": "marvin_ridge",
+      "camera": "marvin_front",
+      "line_width_min_m": 0.025,
+      "line_width_max_m": 0.15,
+      "minimum_length_m": 0.3,
+      "maximum_range_m": 12.0,
+      "ridge_threshold_high": 0.22,
+      "ridge_threshold_low": 0.1,
+      "side_log_threshold": 0.1,
+      "use_depth_gate": true,
+      "ground_live": true,
+      "ground_every": 15,
+      "depth_confirm": 0.5,
+      "object_height_m": 0.04,
+      "depth_vote": 0.3,
+      "metric_association_gate_m": 0.35,
+      "tracking_enabled": true,
+      "component_policy": "diagnostic",
+      "image_roi": [
+        [
+          0,
+          0.55
+        ],
+        [
+          1,
+          0.55
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "calibration_verified": false,
+      "calibration_id": "",
+      "ground_frame_id": "",
+      "mode": "article_hsl_white",
+      "processing_width": 480,
+      "roi_top": 0.4,
+      "roi_shape": "rectangle",
+      "blur_kernel": 11,
+      "canny_low": 50,
+      "canny_high": 150,
+      "hough_threshold": 15,
+      "min_line_length": 20,
+      "max_line_gap": 10,
+      "consensus_distance": 0.008,
+      "min_vertical_span": 0.08,
+      "foreground_y": 0.7,
+      "max_lines": 4,
+      "max_candidates": 160,
+      "association_gate": 0.1,
+      "smoothing_seconds": 0.08,
+      "confirm_hits": 3,
+      "hold_seconds": 0.15,
+      "reset_gap_seconds": 0.5,
+      "min_confidence": 0.25,
+      "max_frame_age_seconds": 0.25,
+      "color_bounds": {
+        "article_hsl_white": [
+          [
+            0,
+            200,
+            0
+          ],
+          [
+            180,
+            255,
+            255
+          ]
+        ],
+        "previous_hsv": [
+          [
+            0,
+            0,
+            195
+          ],
+          [
+            180,
+            30,
+            255
+          ]
+        ],
+        "saved_hsl": [
+          [
+            0,
+            59,
+            0
+          ],
+          [
+            36,
+            205,
+            40
+          ]
+        ]
+      }
+    }
+  },
+  "frames": [
+    {
+      "frame": "frame_000000.jpg",
+      "image_sha256": "a0a3a7f270f4294ac4e62d2e9a6d27287646c824331961054e9f34973ef30fc8",
+      "full_candidate_pixels": 3588,
+      "review_candidate_pixels": 1681,
+      "background_band_before": 995,
+      "background_band_after": 0,
+      "paint_checkpoint": [
+        0.22,
+        0.74
+      ],
+      "checkpoint_distance_px": 0.0,
+      "navigation_eligible": false,
+      "navigation_reasons": [
+        "calibration_not_verified",
+        "ground_frame_not_configured",
+        "no_registered_depth_gate"
+      ]
+    },
+    {
+      "frame": "frame_000410.jpg",
+      "image_sha256": "3a0b5c26d0ed1447a1e293f731fbc1644e78b821b3e7e97bf27b9f310215e988",
+      "full_candidate_pixels": 2740,
+      "review_candidate_pixels": 687,
+      "background_band_before": 1221,
+      "background_band_after": 0,
+      "paint_checkpoint": [
+        0.88,
+        0.79
+      ],
+      "checkpoint_distance_px": 1.0,
+      "navigation_eligible": false,
+      "navigation_reasons": [
+        "calibration_not_verified",
+        "ground_frame_not_configured",
+        "no_registered_depth_gate"
+      ]
+    },
+    {
+      "frame": "frame_000474.jpg",
+      "image_sha256": "9ca54ab010763c543728294e930eb231e46ab8ad12b81a189aace58baf03fec1",
+      "full_candidate_pixels": 4727,
+      "review_candidate_pixels": 2094,
+      "background_band_before": 1585,
+      "background_band_after": 0,
+      "paint_checkpoint": [
+        0.7,
+        0.78
+      ],
+      "checkpoint_distance_px": 0.0,
+      "navigation_eligible": false,
+      "navigation_reasons": [
+        "calibration_not_verified",
+        "ground_frame_not_configured",
+        "no_registered_depth_gate"
+      ]
+    },
+    {
+      "frame": "frame_000710.jpg",
+      "image_sha256": "5a5d3c6569407c2962e09267475d70fae7c472c40713653538ba521629a8a1a5",
+      "full_candidate_pixels": 3792,
+      "review_candidate_pixels": 1336,
+      "background_band_before": 1231,
+      "background_band_after": 0,
+      "paint_checkpoint": [
+        0.8,
+        0.85
+      ],
+      "checkpoint_distance_px": 0.0,
+      "navigation_eligible": false,
+      "navigation_reasons": [
+        "calibration_not_verified",
+        "ground_frame_not_configured",
+        "no_registered_depth_gate"
+      ]
+    },
+    {
+      "frame": "frame_001077.jpg",
+      "image_sha256": "947a132cf89b6a88d28fdab7fc388dd8f74d24bcf176b1a369f7e8b8ab9684eb",
+      "full_candidate_pixels": 2406,
+      "review_candidate_pixels": 1220,
+      "background_band_before": 541,
+      "background_band_after": 0,
+      "paint_checkpoint": [
+        0.73,
+        0.85
+      ],
+      "checkpoint_distance_px": 6.4031243324279785,
+      "navigation_eligible": false,
+      "navigation_reasons": [
+        "calibration_not_verified",
+        "ground_frame_not_configured",
+        "no_registered_depth_gate"
+      ]
+    }
+  ],
+  "timing": {
+    "full": {
+      "mean_ms": 107.5880039902404,
+      "p95_ms": 149.01177999563512,
+      "samples": 25
+    },
+    "recording_review": {
+      "mean_ms": 60.352435992099345,
+      "p95_ms": 71.7128000454977,
+      "samples": 25
+    }
+  },
+  "sequential_smoke": {
+    "available": true,
+    "note": "No reviewed moving-sequence labels; distinct IDs are not identity-switch accuracy.",
+    "frames": 120,
+    "first": "frame_000000.jpg",
+    "last": "frame_000119.jpg",
+    "mean_pipeline_ms": 54.63802749582101,
+    "p95_pipeline_ms": 65.73396502062677,
+    "distinct_track_ids": 3,
+    "frames_with_confirmed_candidates": 118,
+    "navigation_eligible_frames": 0,
+    "replay_clock_fps": 30,
+    "clock_note": "Nominal 30Hz replay clock, not measured acquisition timestamps."
+  },
+  "source_sha256": {
+    "calibration.py": "6c734271df4f63645622c999365c4880e2209b401645468e2485657cf2bdf2d9",
+    "camera.py": "b7799c44c8190b399bab968ca79a676b23b967b02af02ea6c833cb28dc110cb2",
+    "capture.py": "cee946640ebcbeeaa9cc77fdec7aeb0993fd14c520af35823003f5738ba4e8cf",
+    "cli.py": "80ce7b8ddcf06ea7efa90ad545087c07f1b4fbb43f98e0bba23187bbfe238cc1",
+    "components.py": "dddc1249455c4318f3b14b4145e2689ada120d1c617b8750f6b6500a59a6bc52",
+    "config.py": "43e7e29e659283f02de2867fa336880f4921de67edba7822b49991efa5a6e314",
+    "detector.py": "f4bcd3c6570660d0df7b2922cf1dceaefaede674c6be8976f661af5bf1550783",
+    "ground.py": "8a9557c669b9f828ce4c3e302a17f3c80ddab0c3e1dd27f40e42dc0482d5bd0d",
+    "navigation.py": "aa627b43e0892e28a181e64e398a3d88136187f3b89d467636f2efdad2fbcc5b",
+    "original_viewer.py": "d7671787e17241683f924440c786aa30362f569dd14f053f45272231b3b579c2",
+    "physical.py": "7091c368d4c1bb0e2496c8bc698a122de7ba87a79a44ce91ae3de63ca5454848",
+    "region.py": "6adccd3ec706bc754b272faa2f5e8a9323b20b8180685d7114fd44825c29fd2d",
+    "ridge.py": "e05d25c9bd566c0211d03bea7a4d74d1c0114f123c0fce59455921586c49bfb8",
+    "ros_node.py": "83b2ed173cc81a5b4a5565e13bb4dac1c77fa7a0204e6135d71bc39da724f0ff",
+    "tracking.py": "ef4aa636eceb2e52f138fb32b4cf3f1ba146922bbf85520423c8c1da2f2b6279",
+    "__init__.py": "cacfeef3d92ef409345030440b7ccc5404d2b2bd11fe7f1be66ee83b18f535fc"
+  }
+}

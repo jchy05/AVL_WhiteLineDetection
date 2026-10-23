@@ -1,5 +1,7 @@
 # Experimental tracked version
 
+Current entry points: [quick start](QUICK_START.md), [navigation contract](NAVIGATION_OUTPUTS.md), and [current validation](GROUND_IMPROVEMENT.md). Earlier Hough-only limitations and timing below describe the legacy path or historical experiments. The current ridge path has an optional explicit image ROI and separate gated navigation outputs.
+
 Use this after trying the [original viewer](START_HERE.md). This is a rewritten detector, not a behavior-preserving real-time port. Its grouping, fitting, processing resolution and temporal behavior can produce different results. The physical Jetson/ROS camera path remains unverified.
 
 ## Run

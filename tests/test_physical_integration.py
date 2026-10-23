@@ -176,7 +176,7 @@ def test_cli_backends_output_additive_contract_and_export(tmp_path,backend):
     assert (export/'0'/'tracked_overlay.png').exists()
     if backend=='marvin_ridge':
         assert rows[-1]['detected']
-        assert len(list((export/'0').glob('*.png')))==16
+        assert len(list((export/'0').glob('*.png')))==len(RIDGE_STAGES)+1
         assert rows[-1]['tracks'][0]['local_headings_rad']
 
 

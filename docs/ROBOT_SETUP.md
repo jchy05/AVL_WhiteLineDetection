@@ -1,125 +1,109 @@
-# Transfer and run on MARVIN
+# Robot setup: measured geometry and registered depth
 
-**This guide runs the rewritten tracked detector, not the restored original viewer.** For matching the original results first, use [Original program](ORIGINAL_PROGRAM.md). The ROS adapter remains untested on the physical robot.
+This guide runs the current tracked ridge version. The original viewer is separate. Software unit/callback tests have passed; actual Jetson/ROS/ZED/TF/navigation transport remains untested in this development environment. The project sources describe Jetson Orin, JetPack 6, ZED X and ROS Humble/Jazzy; verify the actual robot installation rather than treating that as a live inventory.
 
-The bookmarked AVROS repository documents Jetson Orin / JetPack 6, ZED X cameras and ROS 2 Jazzy/Humble. That is evidence about the project, not a live inventory of your robot. Verify the installed distro and topics before running. No SSH or robot connection was available during development.
-
-## 1. Get the repository
-
-The repository is public. Clone it on the robot without GitHub authentication:
+## 1. Install and discover
 
 ```bash
 git clone https://github.com/jchy05/AVL_WhiteLineDetection.git
 cd AVL_WhiteLineDetection
-```
-
-Alternatively, copy and unzip the supplied source archive. It contains the same code and configuration; no recordings are needed to run live. Authentication is only needed for operations that require write access, such as pushing changes.
-
-## 2. Discover the installation
-
-```bash
 ls /opt/ros
 source /opt/ros/humble/setup.bash  # substitute the installed distribution
+# Source the existing ZED workspace's install/setup.bash if needed.
 bash scripts/probe_robot.sh
+bash scripts/setup_robot.sh
 ```
 
-If the existing ZED driver runs from a workspace, source its `install/setup.bash` too. Keep the team's existing sensor bringup running; this package does not launch or reconfigure cameras.
+The setup script uses a venv with system site packages. Use the robot's ROS-compatible OpenCV/NumPy/cv_bridge; do not replace those with pip OpenCV wheels. It does not launch/reconfigure cameras, install services or send control commands. For offline desktop setup see [Quick start](QUICK_START.md).
+
+Discover actual topics and inspect their headers, dimensions, rates and encoding:
 
 ```bash
 ros2 topic list -t
 ros2 topic info /zed_front/zed_node/rgb/color/rect/image -v
+ros2 topic echo /zed_front/zed_node/rgb/color/rect/camera_info --once
 ros2 topic hz /zed_front/zed_node/rgb/color/rect/image
 ```
 
-The current bookmarked perception code uses `/zed_{front,left,right}/zed_node/rgb/color/rect/image`. Older ZED wrappers may use `rgb/image_rect_color`; discover actual names rather than assuming them.
+The current defaults follow the upstream Marvin integration: `/zed_<camera>/zed_node/rgb/color/rect/image`, `rgb/color/rect/camera_info`, and `depth/depth_registered`. Older wrappers may differ. Check the registered depth header and size against RGB. Topic names alone do not prove registration.
 
-## 3. Install without replacing Jetson ROS libraries
-
-If the setup script reports missing packages:
+## 2. Create a local measured profile
 
 ```bash
-sudo apt install python3-venv python3-pip python3-opencv python3-numpy ros-${ROS_DISTRO}-cv-bridge
+mkdir -p config/local
+cp config/robot_templates/front.json config/local/front.json
 ```
 
-Then:
+Edit the local file, not the shipped template:
+
+- Replace example camera intrinsics and reference dimensions with measured rectified values. With `camera_info_topic` configured, runtime intrinsics are taken from CameraInfo `P`; a change resets detector/tracker state. The current implementation rejects unsupported skew, right-camera baseline projection and unadjusted crop/binning rather than guessing.
+- Measure `height_m` and downward `pitch_deg` for the actual mount. Rectify images upstream. The model assumes no unmodeled roll and a locally flat ground plane. Live depth fitting can smooth height/pitch within bounded priors; it cannot certify an arbitrary mount or terrain.
+- Set `ground_frame_id` to a measured TF frame whose origin is on the ground directly below that camera, X forward in that camera's horizontal direction, Y left, Z up. Verify yaw/translation to `base_link`/map. This package does not invent or publish that transform.
+- Record a meaningful `calibration_id`. Set `calibration_verified=true` only after those measurements/TF and the RGB/depth alignment have been checked. This is an operator assertion, not automatic verification. Preset strings cannot be marked verified; explicit camera fields are required.
+- Keep `image_roi=[]` initially for the robot. The recording-review crop is not transferable calibration.
+
+Local JSON under `config/local/` is ignored by Git. It survives repository updates and is not accidentally committed. Templates stay explicitly unverified and navigation stays blocked until required evidence is present.
+
+## 3. Start one camera and inspect
 
 ```bash
-bash scripts/setup_robot.sh
 bash scripts/run_camera.sh front
 ```
 
-Use `.venv` with system site packages so `cv_bridge` sees the ROS-compatible NumPy/OpenCV. Do not install desktop/headless OpenCV wheels into this robot environment. The script only installs this package into its local venv.
-
-## 4. Verify detections
-
-In another sourced terminal:
+The script supplies that camera's config, rectified image, CameraInfo and registered depth topics. Override discovered topic names through `AVL_IMAGE_TOPIC`, `AVL_CAMERA_INFO_TOPIC`, `AVL_DEPTH_TOPIC`, or provide a second argument for a different config path. Example:
 
 ```bash
-ros2 topic echo /white_lines_front/detections --qos-reliability best_effort
+AVL_DEPTH_TOPIC=/actual/registered/depth bash scripts/run_camera.sh front config/local/front.json
+```
+
+To run manually:
+
+```bash
+.venv/bin/avl-lines-ros --ros-args -r __node:=white_lines_front \
+  -p config_path:=config/local/front.json \
+  -p image_topic:=/zed_front/zed_node/rgb/color/rect/image \
+  -p camera_info_topic:=/zed_front/zed_node/rgb/color/rect/camera_info \
+  -p depth_topic:=/zed_front/zed_node/depth/depth_registered
+```
+
+CameraInfo supplies intrinsics, not height/pitch or TF. If its topic is configured but unavailable/mismatched, outputs are invalidated. Matching RGB/depth size and nonempty optical frame IDs are required; stale or unsynchronized depth becomes unavailable for navigation. `32FC1` is metres, `16UC1` is millimetres and converted once. NaN/zero/Inf are invalid. The API expects optical-axis Z, not radial range or disparity.
+
+## 4. Consume the dedicated outputs
+
+```bash
+ros2 topic echo /white_lines_front/navigation_detections --qos-reliability best_effort
 ros2 run rqt_image_view rqt_image_view
 ```
 
-Select `/white_lines_front/debug` in the image viewer, with best-effort QoS if offered. Debug images are computed only when someone subscribes. If `rqt_image_view` is not installed, install the matching ROS distro package. These debug images retain the source header stamp, but may be resized to the configured processing width.
+Inspect `/white_lines_front/navigation_mask` and `/white_lines_front/debug`. Set `debug_stage` to `Navigation overlay` for on-image block reasons; `Navigation mask` for gated evidence; `Final mask` for raw candidates; `Configured image region` for any pixel crop. Only `debug_stage` is dynamic; restart for other config changes.
 
-Inspect a particular stage:
+`/detections` and `/mask` retain **inspection candidates** for compatibility. Do not connect them to steering/costmaps. `/navigation_detections`, `/navigation_mask`, and `/ground_lines` are conservative gated evidence, not driving authorization. [Exact contract and watchdog requirements](NAVIGATION_OUTPUTS.md).
 
-```bash
-ros2 param set /white_lines_front debug_stage 'Article white mask'
-ros2 param set /white_lines_front debug_stage 'Accepted segments'
-ros2 param set /white_lines_front debug_stage final
-```
+## 5. Verify before navigation integration
 
-## 5. Override topics or settings
+With actuation disabled, verify painted ground, trees/fences/people/barrels, curves, shadows, exposure transitions and missing paint. Inspect actual registered depth on each candidate. Check source/ROS clocks, depth alignment and end-to-end frame age. Withhold/disconnect depth, pause RGB, send a duplicate/backward timestamp, and stop the node: navigation evidence must expire, and the consumer watchdog must handle a publisher that cannot send a final invalidation.
 
-```bash
-cp src/avl_white_lines/default.json front.json
-.venv/bin/avl-lines-ros --ros-args \
-  -r __node:=white_lines_front \
-  -p camera_name:=front \
-  -p config_path:="$(pwd)/front.json" \
-  -p image_topic:=/actual/front/image/topic \
-  -p mode:=article_hsl_white \
-  -p process_hz:=30.0
-```
+Check the TF/RViz placement of measured ground points. Configure costmap observation persistence and clearing: an empty cloud does not erase historical marked cells automatically. The point cloud is ground-boundary evidence with Z=0, not a full obstacle cloud. Do not infer a traversable corridor from one line or an empty mask.
 
-Only `debug_stage` is read dynamically. Restart after changing other node parameters/config. Match input timestamps and ROS clock; for bag playback use `-p use_sim_time:=true` and a `/clock` publisher. Invalid, zero, future, old or duplicate/nonmonotonic stamps cannot sustain confirmed tracking. A stopped camera results in `detected=false` with empty tracks after the freshness timeout.
+No physical validation results are available here. Complete the team's stationary/replay and controlled robot tests before connecting autonomous navigation.
 
-## 6. Run three cameras
+## 6. Three cameras and updates
 
-Start with one camera and measure load before enabling all three:
+Copy/measure separate templates for left and right. First measure one-camera load with debug subscribers closed; then:
 
 ```bash
 ros2 launch ./launch/three_cameras.launch.py
 ```
 
-Or run these in separate sourced terminals:
+The launch file requires `config/local/{front,left,right}.json` and supplies all three topic pairs. Tracking IDs are per camera and are not fused. Actual simultaneous throughput, dropped frames, thermals and acquisition latency must be measured on the Jetson. `process_hz` is a requested processing rate, not a performance guarantee.
 
-```bash
-bash scripts/run_camera.sh front
-bash scripts/run_camera.sh left
-bash scripts/run_camera.sh right
-```
-
-Outputs are `/white_lines_front/{detections,debug}`, `/white_lines_left/{detections,debug}`, and `/white_lines_right/{detections,debug}`. IDs are per camera; do not interpret them as shared identities. Different camera pitch/yaw can require different ROI/threshold settings. The launch example uses default configuration for each; use separate manual commands with `config_path` to tune each.
-
-## 7. Measure actual freshness
-
-- Check input image rate, output rate, `processing_ms`, `frame_age_seconds` and deadline rejections.
-- Default processing width is 960. Reduce it (for example to 640) if end-to-end frame age is too high. Pixel-valued blur/Hough lengths may need retuning at the new resolution.
-- Keep debug subscribers closed for normal timing. Display, recording and three-camera load change performance.
-- Inspect masks under shadows, glare, exposure transitions, turning, barrels and missing paint. The bookmarked team's notes describe auto-exposure interacting with fixed thresholds. Change exposure only through the team's driver configuration and after checking the tradeoff in shadows.
-- Disconnect/pause a camera and verify invalid output. Resume and verify reconfirmation; old lines must not remain valid.
-- Record short input/detection bags for review using your team's normal recording process; camera logs can be large.
-
-The downstream consumer must check `status`, per-track `valid`, source age, and its own watchdog. Best-effort transport can drop a notification. It must not continue using the last valid result indefinitely after the publisher stops. No motor/control topic is published by this package.
-
-## 8. Update later
-
-Keep local settings outside tracked source files, then:
+For updates, keep local calibration files and use:
 
 ```bash
 git pull --ff-only
 bash scripts/setup_robot.sh
 ```
 
-Stop/restart the perception process to load the new version. Add service startup only after camera topics and configurations are verified on the actual robot.
+Restart perception to load changes. [Current validation](GROUND_IMPROVEMENT.md) separates measurements from unfinished hardware work.
+
+[Official interface references](HARDWARE_SOURCES.md#current-interface-cross-check-2026-10-23) support the default topic and message conventions. A ROS parameter cannot silently replace the ground-frame name in a verified profile; update/reverify the profile if the measured frame changes.

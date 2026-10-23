@@ -1,76 +1,58 @@
 # AVL_WhiteLineDetection
 
-Find white road markings and inspect each processing stage beside the original image and the final detection. Start with the **original image viewer** below. It uses native-resolution images, three filters, and 17 processing stages.
+Inspect white-line candidates, track curved ground components, and keep uncertain image detections separate from navigation evidence. The original AVL viewer and its saved results remain available unchanged.
 
-## Calibrated ridge detection
+**Start with the [quick start](docs/QUICK_START.md).** The [documentation map](docs/INDEX.md) lists current guides and separates them from historical experiments.
 
-The new `marvin_ridge` backend combines Marvin's physical ridge filters with AVL tracking, curved ground centerlines, depth/live-ground support and 15 inspection stages. Use it as the production candidate after calibration and robot validation. `legacy_hough` remains the compatibility default; `hybrid_fallback` explicitly labels and discounts Hough fallback. [Setup, commands, calibration and limits](docs/RIDGE_BACKEND.md).
+## Run the five-image review
 
-See the [Marvin / original AVL / new AVL comparison](docs/THREE_VERSION_COMPARISON.md), or the [direct Marvin vs AVL comparison](docs/MARVIN_VS_AVL.md) for same-input timing, image results and observed regressions.
-
-The [segmentation fix and latest results](docs/SEGMENTATION_FIX.md) explain how the default RGB mask now preserves Marvin’s output while component checks remain visible as diagnostics.
-
-## Choose a starting point
-
-| I want to… | Start here |
-| --- | --- |
-| See the images and results without installing anything | [Five-frame comparisons](examples/README.md) |
-| Run the original program on my computer | [Beginner setup](docs/START_HERE.md) |
-| Understand the masks and processing steps | [Pipeline explained](docs/PIPELINE.md) |
-| Find or edit the code | [Repository guide](docs/REPOSITORY_GUIDE.md) |
-| Try temporal tracking or video/camera input | [Experimental tracked version](docs/TRACKED_VERSION.md) |
-| Test the ROS 2 adapter on MARVIN | [Robot setup — experimental](docs/ROBOT_SETUP.md) |
-
-## See the included examples
-
-The repo includes your unchanged raw frames **0, 410, 474, 710 and 1077**, results for all three filters, and all 17 stage previews. The full 1,078-frame recording is not included.
-
-- On GitHub, open [the comparisons page](examples/README.md).
-- After downloading/cloning the repo, open **`examples/gallery.html`** in your browser. No Python installation is needed for this offline gallery.
-
-## Run the original viewer
-
-Requires Python 3.10 or newer. Run these commands from the repository folder. For download instructions or troubleshooting, use [Beginner setup](docs/START_HERE.md).
-
-Interactive mode requires a working graphical desktop. In an SSH session, container or no-display sandbox, use `--export` for saved images instead; see [no-display setup](docs/START_HERE.md#ssh-containers-sandboxes-or-machines-without-a-display).
-
-**Windows PowerShell:**
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[desktop]"
-.\.venv\Scripts\python.exe lane_pipeline_viewer.py examples/raw
-```
-
-**Linux/macOS:**
+After installing in a virtual environment with `.[desktop,test]`:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -e ".[desktop]"
-.venv/bin/python lane_pipeline_viewer.py examples/raw
+python -m avl_white_lines.cli --images examples/raw --config config/recording_review.json
 ```
 
-The window shows **original → selected stage → final detection**. On Windows, subsequent launches can use **Show Sample Frames.cmd** for the five examples or **Start Lane Viewer.cmd** to choose another image folder.
+**I/O** changes the inspection stage; **A/D** changes images; **Space** plays; **T** resets tracking; **S** saves; **Q/Esc** quits. This profile crops the upper 55% of this recording, reducing background candidates. It can also remove distant paint and is not robot calibration. [Installation and headless export](docs/QUICK_START.md).
 
-| Key | Original viewer action |
+The five raw images are frames **0, 410, 474, 710, 1077**. Their original comparisons and 17-stage previews are in [examples](examples/README.md). The full recording is not distributed.
+
+## Understand the outputs
+
+| Output | Use |
 | --- | --- |
-| A / D or left/right arrows | Previous / next image |
-| I / O | Previous / next processing stage |
-| M | Article HSL white → Previous HSV defaults → Saved HSL |
-| R | Rectangular ROI / article trapezoid |
-| S | Save the comparison, selected stage and final image |
-| Q / Esc | Quit |
+| Candidate mask and tracked candidates | Inspection; bright trees/fences can still resemble paint |
+| Navigation JSON, mask and measured-depth point cloud | Requires calibration provenance, matching registered depth, fresh confirmed unflagged metric tracks |
+| Blocked/empty navigation evidence | Unknown/unavailable input, not a clear road or permission to drive |
 
-Saved images go to `results/original/saved/`. The rectangular region starts **40% down from the top**, retaining the bottom 60%.
+The sample recording has no verified calibration/depth, so navigation is **expected to stay blocked**. The actual planner must enforce eligibility, timestamps and its own watchdog. This package does not stop or steer a robot. [Navigation contract](docs/NAVIGATION_OUTPUTS.md).
 
-## Original and tracked versions are different
+## Choose the right configuration
 
-| Program | Purpose and validation |
+| Profile/program | Purpose |
 | --- | --- |
-| Original viewer | Reproduces the working frame-by-frame program. Verified pixel-identical in 72 comparisons on the same inputs/runtime. |
-| Tracked version | Experimental rewrite with different grouping/fitting and temporal tracking. Its detections can differ. |
-| ROS 2 adapter | Runs the experimental tracked version. Not tested on the physical robot; publishes perception, not steering. |
+| `lane_pipeline_viewer.py examples/raw` | Original AVL native-resolution baseline, unchanged |
+| `config/marvin_ridge.json` | Full-frame Marvin-compatible RGB comparison |
+| `config/recording_review.json` | Recording-specific road-region inspection |
+| `config/legacy_hough.json` | Tracked HSL/HSV + Hough comparison |
+| `config/hybrid_fallback.json` | Explicit discounted Hough fallback; fallback never qualifies for navigation |
+| `config/robot_templates/` | Per-camera templates to replace with measured robot data |
 
-Do not use the tracked or ROS commands when checking whether the original results match. The JSON configuration belongs to the tracked version; it does **not** change the original viewer.
+The package default remains legacy Hough for compatibility; use an explicit profile for the current ridge path. [All configuration choices](config/README.md).
 
-See [validation and timing](docs/VALIDATION.md), [output fields](docs/OUTPUT_SCHEMA.md), and the [original transfer record](docs/ORIGINAL_PROGRAM.md) for supporting details.
+## Current evidence and remaining work
+
+[Current validation report](docs/GROUND_IMPROVEMENT.md) includes the five-frame sparse audit, 120-frame sequential smoke, test coverage, CPU timings and known limits. These are not representative real-world precision/recall or robot performance claims. Full-frame RGB parity with Marvin and all original reference outputs remain regression checks.
+
+Physical ROS/ZED registration, TF placement, the downstream planner interlock, Jetson load and controlled robot operation still require hardware validation. [Robot setup](docs/ROBOT_SETUP.md) uses separate local camera files and image/CameraInfo/depth topics.
+
+## Find the code and history
+
+- `src/avl_white_lines/`: detector, camera/region geometry, depth/component metadata, tracking, navigation gates, CLI and ROS adapter.
+- `config/`: named review/reference profiles and robot templates; `config/local/*.json` is ignored by Git.
+- `tests/`: original regressions, synthetic scenes, navigation eligibility/watchdog and mocked ROS callback contract.
+- `scripts/`: setup/probe/run helpers, reproducible comparisons, sparse audit and reference/link checks.
+- `examples/`: unchanged five-frame originals, saved stages and offline original gallery.
+- `validation/`: dated measurements with limitations and source provenance.
+- `docs/`: current guides and preserved historical comparison reports, indexed by [docs/INDEX.md](docs/INDEX.md).
+
+[Change log](CHANGELOG.md) · [Repository guide](docs/REPOSITORY_GUIDE.md) · [Original program record](docs/ORIGINAL_PROGRAM.md).

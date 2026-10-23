@@ -13,5 +13,10 @@ jobs:
           python-version: '${{ matrix.python }}'
       - run: python -m pip install -e '.[headless,test]'
       - run: python -m pytest -q
-      - run: python -m compileall -q src launch
+      - run: python -m compileall -q src scripts launch
       - run: python scripts/check_original_reference.py
+      - run: python scripts/check_docs.py
+      - run: |
+          bash -n scripts/run_camera.sh
+          bash -n scripts/setup_robot.sh
+          bash -n scripts/probe_robot.sh

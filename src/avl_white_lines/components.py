@@ -100,7 +100,7 @@ def extract_components(mask, det, debug, policy='diagnostic'):
 def component_dict(o,identity):
     points=np.asarray(o.centerline_ground)
     headings=np.arctan2(np.gradient(points,axis=0)[:,1],np.gradient(points,axis=0)[:,0]).tolist() if len(points)>1 else []
-    return dict(id=identity,quality_flags=o.quality_flags.copy(),local_headings_rad=headings,backend=o.backend,confidence=o.confidence,length_m=o.length_m,width_m=o.width_m,
+    return dict(id=identity,component_label=o.component_label,quality_flags=o.quality_flags.copy(),local_headings_rad=headings,backend=o.backend,confidence=o.confidence,length_m=o.length_m,width_m=o.width_m,
                 heading_rad=o.heading_rad,centerline_ground=o.centerline_ground,centerline_image=o.centerline_image,
                 depth_confirmed=o.depth_confirmed)
 
@@ -108,15 +108,17 @@ def component_dict(o,identity):
 def metric_cost(a,b,gate):
     if a.backend!=b.backend: return None
     p,q=np.asarray(a.centerline_ground),np.asarray(b.centerline_ground)
-    distances=np.linalg.norm(p[:,None,:]-q[None,:,:],axis=2)
-    da,db=distances.min(axis=1),distances.min(axis=0)
-    # Partial views can associate, but require substantial overlap in both directions.
-    overlap=min(float(np.mean(da<gate)),float(np.mean(db<gate)))
     angle=abs((a.heading_rad-b.heading_rad+np.pi/2)%np.pi-np.pi/2)
     ratio=min(a.length_m,b.length_m)/max(a.length_m,b.length_m,1e-9)
     center_distance=float(np.linalg.norm(np.mean(p,axis=0)-np.mean(q,axis=0)))
+    if angle>.6 or ratio<.25 or center_distance>max(a.length_m,b.length_m)*.6+gate: return None
+    separation=np.maximum(np.maximum(p.min(axis=0)-q.max(axis=0),q.min(axis=0)-p.max(axis=0)),0)
+    if np.linalg.norm(separation)>=gate: return None
+    distances=np.linalg.norm(p[:,None,:]-q[None,:,:],axis=2)
+    da,db=distances.min(axis=1),distances.min(axis=0)
+    overlap=min(float(np.mean(da<gate)),float(np.mean(db<gate)))
     distance=float((np.median(da)+np.median(db))/2)
-    if distance>=gate or overlap<.4 or angle>.6 or ratio<.25 or center_distance>max(a.length_m,b.length_m)*.6+gate: return None
+    if distance>=gate or overlap<.4: return None
     return distance+.1*angle+.05*(1-overlap)+.03*(1-ratio)+.02*(1-b.confidence)
 
 

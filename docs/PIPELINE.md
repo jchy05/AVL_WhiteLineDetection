@@ -1,5 +1,7 @@
 # Pipeline explained
 
+Current entry points: [quick start](QUICK_START.md), [navigation contract](NAVIGATION_OUTPUTS.md), and [current validation](GROUND_IMPROVEMENT.md). Earlier Hough-only limitations and timing below describe the legacy path or historical experiments. The current ridge path has an optional explicit image ROI and separate gated navigation outputs.
+
 Both viewers expose the same stage names, but their segment grouping and final fitting differ. The checked-in example images use the **original viewer**. Changing the inspected stage does not change the active detection pipeline; changing the filter or ROI does.
 
 ## Filters

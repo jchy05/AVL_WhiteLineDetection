@@ -1,5 +1,7 @@
 # Validation performed
 
+Current entry points: [quick start](QUICK_START.md), [navigation contract](NAVIGATION_OUTPUTS.md), and [current validation](GROUND_IMPROVEMENT.md). Earlier Hough-only limitations and timing below describe the legacy path or historical experiments. The current ridge path has an optional explicit image ROI and separate gated navigation outputs.
+
 Development date: 2026-10-16. See [machine-readable timing](development_benchmark.json).
 
 ## External evaluation reported October 19

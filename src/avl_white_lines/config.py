@@ -26,6 +26,10 @@ class Config:
     metric_association_gate_m: float = .35
     tracking_enabled: bool = True
     component_policy: str = "diagnostic"
+    image_roi: list = field(default_factory=list)
+    calibration_verified: bool = False
+    calibration_id: str = ""
+    ground_frame_id: str = ""
     mode: str = "article_hsl_white"
     processing_width: int = 960
     roi_top: float = .4
@@ -59,6 +63,14 @@ class Config:
             if isinstance(value,(float,int)) and not math.isfinite(value): raise ValueError(f"Non-finite {name}")
         for name in ("processing_width","blur_kernel","canny_low","canny_high","hough_threshold","min_line_length","max_line_gap","max_lines","max_candidates","confirm_hits"):
             if type(getattr(self,name)) is not int: raise ValueError(f"{name} must be an integer")
+        if type(self.calibration_verified) is not bool: raise ValueError('calibration_verified must be bool')
+        if not isinstance(self.calibration_id,str) or not isinstance(self.ground_frame_id,str): raise ValueError('Calibration/frame identifiers must be strings')
+        if self.calibration_verified and (not self.calibration_id.strip() or not self.ground_frame_id.strip()): raise ValueError('Verified calibration requires calibration_id and ground_frame_id')
+        if not isinstance(self.image_roi,list): raise ValueError('image_roi must be a list')
+        if self.calibration_verified and isinstance(self.camera,str): raise ValueError('Verified calibration requires measured camera fields, not a preset name')
+        if self.image_roi:
+            from .region import validate_polygon
+            validate_polygon(self.image_roi)
         if self.component_policy not in ('diagnostic','strict'): raise ValueError('Invalid component_policy')
         if self.backend not in ('legacy_hough','marvin_ridge','hybrid_fallback'): raise ValueError('Invalid backend')
         if self.backend != 'legacy_hough':

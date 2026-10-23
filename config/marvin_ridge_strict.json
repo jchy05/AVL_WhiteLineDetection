@@ -76,5 +76,9 @@
       ]
     ]
   },
-  "component_policy": "strict"
+  "component_policy": "strict",
+  "image_roi": [],
+  "calibration_verified": false,
+  "calibration_id": "",
+  "ground_frame_id": ""
 }

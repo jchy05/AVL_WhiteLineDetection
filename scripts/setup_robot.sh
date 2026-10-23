@@ -12,4 +12,4 @@ fi
 python3 -m venv --system-site-packages .venv
 .venv/bin/python -m pip install --no-deps -e .
 .venv/bin/python -c 'import cv2, numpy, rclpy, cv_bridge; print("ROS/OpenCV imports passed")'
-echo "Ready. Use: .venv/bin/avl-lines-ros --ros-args -p camera_name:=front"
+echo "Environment installed. Copy and measure config/robot_templates, then run: bash scripts/run_camera.sh front. See docs/ROBOT_SETUP.md."

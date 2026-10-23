@@ -21,3 +21,5 @@ results/
 !examples/raw/*.jpg
 !examples/generated/**/*.png
 !examples/generated/**/*.jpg
+
+/config/local/*.json

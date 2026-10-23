@@ -11,6 +11,7 @@ from .config import MODES,load_config,save_config
 from .detector import STAGES,Detector,render
 from .components import component_dict
 from .tracking import Tracker
+from .navigation import navigation_output,populate_navigation_stages
 from .capture import LatestCapture
 from .original_viewer import STAGES as ORIGINAL_STAGE_INFO
 
@@ -27,7 +28,7 @@ def compose(result,tracks,stage,cfg,source=''):
     stages=tuple(result.stages); stage=stage%len(stages)
     inspected=result.stages[stages[stage]]
     if stages[stage]=='Tracked components': inspected=render(result,tracks)
-    top=np.hstack([panel(result.original,'Original / '+source),panel(inspected,f'{stage+1}/{len(stages)} {stages[stage]}'),panel(final,'Tracked / '+result.backend)])
+    top=np.hstack([panel(result.original,'Original / '+source),panel(inspected,f'{stage+1}/{len(stages)} {stages[stage]}'),panel(final,'Tracked candidates / '+result.backend)])
     footer=np.zeros((100,top.shape[1],3),np.uint8)
     description=dict(ORIGINAL_STAGE_INFO).get(stages[stage],stages[stage]+' / '+result.backend)
     if stages[stage]=='Active color mask': description=f'Current mask: {cfg.mode}. M changes the mask used by following stages.'
@@ -103,7 +104,7 @@ def main(argv=None):
                     if packet is None:
                         tracker.reset()
                         if log:
-                            log.write(json.dumps({'schema_version':1,'status':'stale','tracks':[],'detected':False})+'\n'); log.flush()
+                            log.write(json.dumps({'schema_version':1,'status':'stale','output_role':'inspection_candidates','navigation':{'eligible':False,'detected':False,'tracks':[],'reasons':['stale']},'tracks':[],'detected':False})+'\n'); log.flush()
                         if source.failed: raise RuntimeError('Camera stopped delivering frames')
                         if not args.headless:
                             stale=np.zeros((360,960,3),np.uint8)
@@ -129,11 +130,14 @@ def main(argv=None):
                 deadline_missed=bool(source and time.monotonic()-timestamp>cfg.max_frame_age_seconds)
                 if deadline_missed:
                     tracker.reset(); tracks=[]
+                status='processing_deadline_missed' if deadline_missed else 'ok'
+                navigation=navigation_output(result,tracks,cfg,status,frame_age_seconds=time.monotonic()-timestamp if source else None)
+                populate_navigation_stages(result,navigation)
                 times.append((time.perf_counter()-started)*1000)
                 processed+=1
                 payload={'schema_version':1,'source':frame_source,'timestamp_seconds':timestamp,
                          'image_size':[current.shape[1],current.shape[0]],'mode':cfg.mode,
-                         'status':'processing_deadline_missed' if deadline_missed else 'ok','detected':any(t['valid'] for t in tracks),'tracks':tracks,
+                         'status':status,'output_role':'inspection_candidates','navigation':navigation.payload(),'detected':any(t['valid'] for t in tracks),'tracks':tracks,
                          'processing_image_size':[result.original.shape[1],result.original.shape[0]],
                          'backend':result.backend,'ground_estimate':result.ground_estimate,'diagnostics':result.diagnostics,
                          'components':[component_dict(o,i+1) for i,o in enumerate(result.observations)],

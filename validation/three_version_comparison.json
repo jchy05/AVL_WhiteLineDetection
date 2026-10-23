@@ -1,0 +1,291 @@
+{
+  "note": "Primary views use original 1280x720 input, original AVL unchanged at native resolution, both ridge backends internally width 480. No depth or tracking, no live fitting, same unverified marvin_front calibration. Secondary timing sends identical 480px images to all three, changing original AVL pixel-scale behavior. Original process always constructs its 17 stages and overlay; workloads differ. No real ground truth or camera calibration: no accuracy ranking.",
+  "python": "3.14.6",
+  "opencv": "4.13.0",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "camera": {
+    "fx": 181.2,
+    "fy": 181.2,
+    "cx": 242.0,
+    "cy": 153.3,
+    "ref_width": 480,
+    "ref_height": 300,
+    "height_m": 0.62,
+    "pitch_deg": 20.7
+  },
+  "timing": {
+    "native_inputs": {
+      "Marvin": {
+        "mean_ms": 54.71857142900782,
+        "p50_ms": 49.46060001384467,
+        "p95_ms": 77.63783005066213,
+        "samples": 35
+      },
+      "Old AVL original": {
+        "mean_ms": 97.6452057116798,
+        "p50_ms": 87.1049000415951,
+        "p95_ms": 141.63661997299639,
+        "samples": 35
+      },
+      "New AVL ridge": {
+        "mean_ms": 152.6445485718016,
+        "p50_ms": 154.8103999812156,
+        "p95_ms": 210.3122100234031,
+        "samples": 35
+      }
+    },
+    "shared_480_inputs": {
+      "Marvin": {
+        "mean_ms": 46.271105722657275,
+        "p50_ms": 42.69879998173565,
+        "p95_ms": 54.12617998663334,
+        "samples": 35
+      },
+      "Old AVL original": {
+        "mean_ms": 14.205491419748537,
+        "p50_ms": 13.615500065498054,
+        "p95_ms": 16.853750008158386,
+        "samples": 35
+      },
+      "New AVL ridge": {
+        "mean_ms": 134.68995427912367,
+        "p50_ms": 135.75260003563017,
+        "p95_ms": 191.9111899798736,
+        "samples": 35
+      }
+    }
+  },
+  "frames": [
+    {
+      "frame": "frame_000000",
+      "input_size": [
+        1280,
+        720
+      ],
+      "source_sha256": "a0a3a7f270f4294ac4e62d2e9a6d27287646c824331961054e9f34973ef30fc8",
+      "marvin_mask_pixels": 25495,
+      "new_avl_mask_pixels": 23516,
+      "new_avl_components": 10,
+      "old_modes": [
+        {
+          "mode": "Article HSL white",
+          "reference_pixel_identical": true,
+          "segments": 54,
+          "accepted_by_group": [
+            19,
+            0,
+            10
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Previous HSV",
+          "reference_pixel_identical": true,
+          "segments": 50,
+          "accepted_by_group": [
+            18,
+            0,
+            9
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Saved HSL",
+          "reference_pixel_identical": true,
+          "segments": 107,
+          "accepted_by_group": [
+            30,
+            0,
+            11
+          ],
+          "fitted_groups": 2
+        }
+      ]
+    },
+    {
+      "frame": "frame_000410",
+      "input_size": [
+        1280,
+        720
+      ],
+      "source_sha256": "3a0b5c26d0ed1447a1e293f731fbc1644e78b821b3e7e97bf27b9f310215e988",
+      "marvin_mask_pixels": 19487,
+      "new_avl_mask_pixels": 10277,
+      "new_avl_components": 8,
+      "old_modes": [
+        {
+          "mode": "Article HSL white",
+          "reference_pixel_identical": true,
+          "segments": 50,
+          "accepted_by_group": [
+            0,
+            8,
+            11
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Previous HSV",
+          "reference_pixel_identical": true,
+          "segments": 59,
+          "accepted_by_group": [
+            0,
+            6,
+            10
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Saved HSL",
+          "reference_pixel_identical": true,
+          "segments": 141,
+          "accepted_by_group": [
+            0,
+            7,
+            18
+          ],
+          "fitted_groups": 2
+        }
+      ]
+    },
+    {
+      "frame": "frame_000474",
+      "input_size": [
+        1280,
+        720
+      ],
+      "source_sha256": "9ca54ab010763c543728294e930eb231e46ab8ad12b81a189aace58baf03fec1",
+      "marvin_mask_pixels": 33582,
+      "new_avl_mask_pixels": 14844,
+      "new_avl_components": 11,
+      "old_modes": [
+        {
+          "mode": "Article HSL white",
+          "reference_pixel_identical": true,
+          "segments": 59,
+          "accepted_by_group": [
+            5,
+            0,
+            27
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Previous HSV",
+          "reference_pixel_identical": true,
+          "segments": 55,
+          "accepted_by_group": [
+            5,
+            0,
+            19
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Saved HSL",
+          "reference_pixel_identical": true,
+          "segments": 155,
+          "accepted_by_group": [
+            6,
+            0,
+            18
+          ],
+          "fitted_groups": 2
+        }
+      ]
+    },
+    {
+      "frame": "frame_000710",
+      "input_size": [
+        1280,
+        720
+      ],
+      "source_sha256": "5a5d3c6569407c2962e09267475d70fae7c472c40713653538ba521629a8a1a5",
+      "marvin_mask_pixels": 26973,
+      "new_avl_mask_pixels": 23850,
+      "new_avl_components": 9,
+      "old_modes": [
+        {
+          "mode": "Article HSL white",
+          "reference_pixel_identical": true,
+          "segments": 74,
+          "accepted_by_group": [
+            11,
+            0,
+            16
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Previous HSV",
+          "reference_pixel_identical": true,
+          "segments": 76,
+          "accepted_by_group": [
+            9,
+            0,
+            20
+          ],
+          "fitted_groups": 2
+        },
+        {
+          "mode": "Saved HSL",
+          "reference_pixel_identical": true,
+          "segments": 166,
+          "accepted_by_group": [
+            7,
+            0,
+            18
+          ],
+          "fitted_groups": 2
+        }
+      ]
+    },
+    {
+      "frame": "frame_001077",
+      "input_size": [
+        1280,
+        720
+      ],
+      "source_sha256": "947a132cf89b6a88d28fdab7fc388dd8f74d24bcf176b1a369f7e8b8ab9684eb",
+      "marvin_mask_pixels": 17071,
+      "new_avl_mask_pixels": 19387,
+      "new_avl_components": 8,
+      "old_modes": [
+        {
+          "mode": "Article HSL white",
+          "reference_pixel_identical": true,
+          "segments": 75,
+          "accepted_by_group": [
+            3,
+            5,
+            8
+          ],
+          "fitted_groups": 3
+        },
+        {
+          "mode": "Previous HSV",
+          "reference_pixel_identical": true,
+          "segments": 53,
+          "accepted_by_group": [
+            6,
+            5,
+            7
+          ],
+          "fitted_groups": 3
+        },
+        {
+          "mode": "Saved HSL",
+          "reference_pixel_identical": true,
+          "segments": 154,
+          "accepted_by_group": [
+            4,
+            4,
+            7
+          ],
+          "fitted_groups": 3
+        }
+      ]
+    }
+  ],
+  "original_viewer_sha256": "d7671787e17241683f924440c786aa30362f569dd14f053f45272231b3b579c2"
+}

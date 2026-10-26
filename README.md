@@ -45,6 +45,10 @@ The package default remains legacy Hough for compatibility; use an explicit prof
 
 Physical ROS/ZED registration, TF placement, the downstream planner interlock, Jetson load and controlled robot operation still require hardware validation. [Robot setup](docs/ROBOT_SETUP.md) uses separate local camera files and image/CameraInfo/depth topics.
 
+## Measure the next improvement
+
+The [full-recording review](docs/FULL_RECORDING_REVIEW.md) covers all 1,078 local frames and identifies output gaps for inspection. A [label editor and scorer](docs/EVALUATION_WORKFLOW.md) now support reviewed paint centerlines, the <10 px / <2 degree criterion, and frozen prediction comparisons. Unreviewed drafts never count as accuracy ground truth.
+
 ## Find the code and history
 
 - `src/avl_white_lines/`: detector, camera/region geometry, depth/component metadata, tracking, navigation gates, CLI and ROS adapter.

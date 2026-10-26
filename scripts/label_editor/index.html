@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>Manual paint boundary labels</title>
+<style>body{background:#15191f;color:#eee;font:14px system-ui;margin:16px}button,input,select{font:inherit;padding:5px;margin:2px}canvas{display:block;width:100%;max-width:1280px;height:auto;background:#000;cursor:crosshair}h1{font-size:24px;margin:0 0 8px}header p{margin:6px 0;line-height:1.3}#reviewer{width:140px}#condition{width:110px}#import{max-width:200px}header{position:sticky;top:0;background:#15191f;padding:8px;z-index:1}#message{color:#ffca75}p{max-width:1200px}a{color:#9cd5ff}</style>
+<header><h1>Label visible paint centerlines</h1>
+<p>Click along ONE visible paint segment. Enter finishes it; N starts the next. Split gaps/occlusions into separate segments. Label from the raw image, not detector suggestions. Edits clear review status. Unreviewed frames never count as accuracy ground truth. Download to save; use Load labels to resume after reopening.</p>
+<button id="prev">A: previous</button><button id="next">D: next</button><button id="finish">Enter / N: finish line</button><button id="undo">Backspace: undo</button><button id="remove">Remove last line</button>
+<label>Reviewer <input id="reviewer" placeholder="Your name or initials"></label>
+<label>Condition <input id="condition" value="unknown"></label>
+<button id="review">Mark reviewed</button><button id="negative">Reviewed negative (no paint)</button><button id="export">Download labels</button><label>Load labels <input id="import" type="file" accept=".json"></label>
+<p id="status"></p><p id="message"></p></header><canvas id="canvas"></canvas>
+<script src="dataset.js"></script><script src="editor.js"></script>

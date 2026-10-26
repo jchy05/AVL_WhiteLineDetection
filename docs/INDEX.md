@@ -10,6 +10,11 @@ Read the **current guides** first. Earlier comparison reports are preserved as d
 4. [Robot setup](ROBOT_SETUP.md): CameraInfo, measured mount/TF, registered depth, topics, watchdogs.
 5. [Current validation report](GROUND_IMPROVEMENT.md): measured results, sparse audit limits, sequential smoke run and outstanding hardware work.
 
+## Evaluation and next improvements
+
+- [Full 1,078-frame review](FULL_RECORDING_REVIEW.md): output gaps, review queue and current limits.
+- [Raw-image labeling and scoring](EVALUATION_WORKFLOW.md): human-reviewed centerlines, strict thresholds, frozen predictions and comparison policy.
+
 ## How the code works
 
 - [Pipeline](PIPELINE.md): original color/Hough stages and current calibrated ridge stages.

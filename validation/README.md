@@ -2,6 +2,7 @@
 
 | Record | Meaning |
 | --- | --- |
+| `full_recording_summary.json`, `full_recording_frames.jsonl` | Full 1,078-frame output/runtime review; selective review queue, no accuracy labels |
 | `ground_improvement.json` | Current five-image sparse audit and 120-frame sequential runtime smoke; no reviewed full-frame accuracy labels |
 | `segmentation_fix.json` | Previous fix restoring Marvin RGB masks after extra filtering/dilation regressions |
 | `three_version_comparison.json` | Historical Marvin / original AVL / initial new AVL comparison |

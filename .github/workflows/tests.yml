@@ -20,3 +20,4 @@ jobs:
           bash -n scripts/run_camera.sh
           bash -n scripts/setup_robot.sh
           bash -n scripts/probe_robot.sh
+      - run: node --check scripts/label_editor/editor.js

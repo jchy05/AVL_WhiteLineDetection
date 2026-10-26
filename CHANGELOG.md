@@ -1,5 +1,12 @@
 # Change log
 
+## Evaluation tooling — 2026-10-26
+
+- Full 1,078-frame continuity/runtime review, per-frame numerical records and a 24-frame diverse review queue.
+- Raw-image centerline editor with explicit reviewer/negative state, edit invalidation, export and reload.
+- Reviewed-only native-pixel boundary scoring with <10 px / <2 degree thresholds, bidirectional coverage, one-to-one matching, image identity checks and frozen predictions.
+- No production detection or navigation algorithm changes and no invented real ground truth.
+
 ## 0.2.0 — ground-region and navigation improvements — 2026-10-23
 
 - Optional explicit image polygon; separate `recording_review` profile crops this recording's upper background while preserving the full-frame reference profile.

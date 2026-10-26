@@ -17,7 +17,7 @@ results/
 *.jpg
 *.png
 *.zip
-!docs/*.png
+!docs/images/*.png
 !examples/raw/*.jpg
 !examples/generated/**/*.png
 !examples/generated/**/*.jpg

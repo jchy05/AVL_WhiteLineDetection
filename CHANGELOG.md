@@ -1,5 +1,12 @@
 # Change log
 
+## Repository organization — 2026-10-26
+
+- Separated historical narrative reports into `docs/history/` and illustrations into `docs/images/`, with forwarding pages at old Markdown URLs.
+- Added task-based script/test catalogs, a folder map and separate current/historical validation indexes.
+- Fresh backend benchmarks default to ignored `results/`; documentation checks exclude generated data and dependency directories.
+- Detection code, public entry points, profiles, raw examples and original saved reference outputs are unchanged.
+
 ## Evaluation tooling — 2026-10-26
 
 - Full 1,078-frame continuity/runtime review, per-frame numerical records and a 24-frame diverse review queue.

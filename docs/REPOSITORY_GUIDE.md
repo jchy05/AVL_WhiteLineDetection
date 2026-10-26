@@ -2,6 +2,29 @@
 
 Use [docs/INDEX.md](INDEX.md) to choose a current guide; root README is the short entry point. Avoid using a historical comparison's settings as a new deployment recipe.
 
+## Folder map
+
+```text
+AVL_WhiteLineDetection/
+  README.md                 Short entry point
+  lane_pipeline_viewer.py   Original viewer entry point
+  src/avl_white_lines/       Installable runtime and evaluation code
+  config/                   Named profiles and robot templates
+    local/                  Ignored measured camera settings
+  launch/                   ROS launch entry points
+  scripts/                  Review, scoring, comparison and setup tools
+    label_editor/           Exportable annotation editor template
+  tests/                    Regression tests and fixtures
+  examples/                 Five raw frames and original saved results
+  docs/                     Current setup and design guides
+    history/                Earlier narrative reports and provenance JSON
+    images/                 Report illustrations
+  validation/               Frozen numerical records and current review trace
+  results/                  Ignored generated experiments
+```
+
+[Scripts by task](../scripts/README.md) and [tests by responsibility](../tests/README.md) provide the detailed catalogs. Local recordings and datasets also stay in ignored `recordings/` or `data/`, or outside the repository. Existing viewer, CLI, config and script entry paths are retained.
+
 ## Implementation
 
 | File | Responsibility |
@@ -14,6 +37,7 @@ Use [docs/INDEX.md](INDEX.md) to choose a current guide; root README is the shor
 | `tracking.py` | One-to-one matching, smoothing, confirmation, held/expired states |
 | `navigation.py` | Conservative navigation eligibility, masks/points, block reasons and receiver watchdog helper |
 | `calibration.py` | Rectified CameraInfo and registration validation without a ROS dependency |
+| `evaluation.py` | Reviewed dataset validation, native-pixel boundary matching and scoring |
 | `cli.py` | Image/video/camera viewer, stage export, JSONL and local timing |
 | `ros_node.py` | Latest-frame ROS adapter, candidate/navigation topics, depth pairing and invalidation |
 | `config.py`, `default.json` | Validated settings and compatibility defaults |
@@ -37,7 +61,7 @@ python -m compileall -q src scripts launch
 
 The strict PNG-byte check is a local reproducibility check; CI requires original pixel equality across supported Python environments. ROS callback tests use message doubles and do not validate middleware/drivers/hardware.
 
-`validation/ground_improvement.json` is the current sparse audit/runtime record. Earlier JSON/Markdown reports remain dated history; see [validation index](../validation/README.md). Generated current visual galleries go under `results/` or a user-selected output directory.
+`validation/full_recording_summary.json` and `full_recording_frames.jsonl` record the latest full-recording review; `ground_improvement.json` records the sparse audit/runtime smoke. See the [validation index](../validation/README.md) and [historical archive](history/README.md). Annotation templates live in `scripts/label_editor/`; generated review sets contain their own `labeling/` folder with native images and labels. Generated current visual galleries go under `results/` or a user-selected output directory.
 
 ## Maintenance
 

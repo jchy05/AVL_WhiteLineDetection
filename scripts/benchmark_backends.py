@@ -95,7 +95,7 @@ def evaluate(cfg,frames,repeat):
 
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument('--output',type=Path,default=ROOT/'validation/backend_benchmark.json'); parser.add_argument('--repeat',type=int,default=3);args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument('--output',type=Path,default=ROOT/'results/backend_benchmark.json'); parser.add_argument('--repeat',type=int,default=3);args=parser.parse_args()
     if args.repeat<1: parser.error('repeat must be positive')
     frames=[]
     for name,kwargs in [('tape',dict(tape=True)),('shadow',dict(tape=False,shadow=True))]:

@@ -26,11 +26,13 @@ Read the **current guides** first. Earlier comparison reports are preserved as d
 
 ## Historical evidence
 
-- [Original transfer verification](ORIGINAL_PROGRAM.md).
-- [First integration report](../validation/INTEGRATION_REPORT.md).
-- [Marvin versus initial AVL integration](MARVIN_VS_AVL.md).
-- [Marvin / original AVL / initial new AVL](THREE_VERSION_COMPARISON.md).
-- [Restoring exact Marvin RGB segmentation](SEGMENTATION_FIX.md).
-- [Earlier validation record](VALIDATION.md) and [hardware source notes](HARDWARE_SOURCES.md).
+The [archive index](history/README.md) explains the report sequence. [Script commands](../scripts/README.md), [test map](../tests/README.md) and [numerical validation records](../validation/README.md) have their own indexes.
+
+- [Original transfer verification](history/ORIGINAL_PROGRAM.md).
+- [First integration report](history/INITIAL_INTEGRATION.md).
+- [Marvin versus initial AVL integration](history/MARVIN_VS_AVL.md).
+- [Marvin / original AVL / initial new AVL](history/THREE_VERSION_COMPARISON.md).
+- [Restoring exact Marvin RGB segmentation](history/SEGMENTATION_FIX.md).
+- [Earlier validation record](history/VALIDATION.md) and [hardware source notes](HARDWARE_SOURCES.md).
 
 [Change log](../CHANGELOG.md) records what changed and why. Do not interpret an older timing table or example preset as calibration for a new robot mount.

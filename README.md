@@ -53,10 +53,11 @@ The [full-recording review](docs/FULL_RECORDING_REVIEW.md) covers all 1,078 loca
 
 - `src/avl_white_lines/`: detector, camera/region geometry, depth/component metadata, tracking, navigation gates, CLI and ROS adapter.
 - `config/`: named review/reference profiles and robot templates; `config/local/*.json` is ignored by Git.
-- `tests/`: original regressions, synthetic scenes, navigation eligibility/watchdog and mocked ROS callback contract.
-- `scripts/`: setup/probe/run helpers, reproducible comparisons, sparse audit and reference/link checks.
+- [tests/](tests/README.md): regression and software-contract test map.
+- [scripts/](scripts/README.md): task-based command catalog for checks, review, scoring, comparisons and robot helpers.
 - `examples/`: unchanged five-frame originals, saved stages and offline original gallery.
-- `validation/`: dated measurements with limitations and source provenance.
-- `docs/`: current guides and preserved historical comparison reports, indexed by [docs/INDEX.md](docs/INDEX.md).
+- [validation/](validation/README.md): current numerical evidence and frozen historical measurements.
+- [docs/](docs/INDEX.md): current guides; [docs/history/](docs/history/README.md) holds earlier reports and [docs/images/](docs/images/README.md) holds illustrations.
+- `results/`, `recordings/`, `data/`, `config/local/`: local work, recordings and calibration; ignored by Git.
 
-[Change log](CHANGELOG.md) · [Repository guide](docs/REPOSITORY_GUIDE.md) · [Original program record](docs/ORIGINAL_PROGRAM.md).
+[Change log](CHANGELOG.md) · [Repository guide](docs/REPOSITORY_GUIDE.md) · [Original program record](docs/history/ORIGINAL_PROGRAM.md).

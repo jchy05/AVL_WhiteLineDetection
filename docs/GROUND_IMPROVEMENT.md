@@ -11,7 +11,7 @@ This update addresses background candidates and their possible use by navigation
 5. **Freshness and watchdog.** Duplicate/backward RGB stamps, stream loss, errors and missed deadlines clear navigation evidence; publication rechecks source age. A receiver helper rejects blocked/wrong-role/expired evidence and must be called as time passes without new messages. Actual planner stop/fallback integration remains external.
 6. **Performance and organization.** Cheap metric-association rejection runs before all-pairs distances. Robot templates/local configs and per-camera launch commands replace implicit defaults. Current docs are indexed separately from dated historical reports.
 
-![Raw / full-frame candidates / recording crop / navigation](ground_improvement_example.png)
+![Raw / full-frame candidates / recording crop / navigation](images/ground_improvement_example.png)
 
 ## Five-frame sparse visual audit
 

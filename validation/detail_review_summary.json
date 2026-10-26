@@ -1,0 +1,250 @@
+{
+  "frames": 1078,
+  "platform": "Windows-11-10.0.26300-SP0",
+  "opencv": "4.13.0",
+  "numpy": "2.4.6",
+  "python": "3.14.6",
+  "replay_clock_fps": 30,
+  "source_sha256": {
+    "__init__.py": "cacfeef3d92ef409345030440b7ccc5404d2b2bd11fe7f1be66ee83b18f535fc",
+    "calibration.py": "6c734271df4f63645622c999365c4880e2209b401645468e2485657cf2bdf2d9",
+    "camera.py": "b7799c44c8190b399bab968ca79a676b23b967b02af02ea6c833cb28dc110cb2",
+    "capture.py": "cee946640ebcbeeaa9cc77fdec7aeb0993fd14c520af35823003f5738ba4e8cf",
+    "cli.py": "80ce7b8ddcf06ea7efa90ad545087c07f1b4fbb43f98e0bba23187bbfe238cc1",
+    "components.py": "dddc1249455c4318f3b14b4145e2689ada120d1c617b8750f6b6500a59a6bc52",
+    "config.py": "43e7e29e659283f02de2867fa336880f4921de67edba7822b49991efa5a6e314",
+    "detector.py": "f4bcd3c6570660d0df7b2922cf1dceaefaede674c6be8976f661af5bf1550783",
+    "evaluation.py": "7f9fec5b1ccc0c9ed9d1cdd35fe594d4a3b4f6372c87a857d6d82c3c2dbdc131",
+    "ground.py": "8a9557c669b9f828ce4c3e302a17f3c80ddab0c3e1dd27f40e42dc0482d5bd0d",
+    "navigation.py": "aa627b43e0892e28a181e64e398a3d88136187f3b89d467636f2efdad2fbcc5b",
+    "original_viewer.py": "d7671787e17241683f924440c786aa30362f569dd14f053f45272231b3b579c2",
+    "physical.py": "96de462b9f87d73c60e9b4d020f0f1a653539ca07af6d628ca14526985a94b57",
+    "region.py": "6adccd3ec706bc754b272faa2f5e8a9323b20b8180685d7114fd44825c29fd2d",
+    "ridge.py": "3179d2be69ba0ebdff5ba1361180490a4c588bd0870d6e63d93ac0aa369837ce",
+    "ros_node.py": "83b2ed173cc81a5b4a5565e13bb4dac1c77fa7a0204e6135d71bc39da724f0ff",
+    "tracking.py": "ef4aa636eceb2e52f138fb32b4cf3f1ba146922bbf85520423c8c1da2f2b6279"
+  },
+  "configs": {
+    "baseline": {
+      "backend": "marvin_ridge",
+      "camera": "marvin_front",
+      "line_width_min_m": 0.025,
+      "line_width_max_m": 0.15,
+      "minimum_length_m": 0.3,
+      "maximum_range_m": 12.0,
+      "ridge_threshold_high": 0.22,
+      "ridge_threshold_low": 0.1,
+      "side_log_threshold": 0.1,
+      "use_depth_gate": true,
+      "ground_live": true,
+      "ground_every": 15,
+      "depth_confirm": 0.5,
+      "object_height_m": 0.04,
+      "depth_vote": 0.3,
+      "metric_association_gate_m": 0.35,
+      "tracking_enabled": true,
+      "component_policy": "diagnostic",
+      "image_roi": [
+        [
+          0,
+          0.55
+        ],
+        [
+          1,
+          0.55
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "calibration_verified": false,
+      "calibration_id": "",
+      "ground_frame_id": "",
+      "mode": "article_hsl_white",
+      "processing_width": 480,
+      "roi_top": 0.4,
+      "roi_shape": "rectangle",
+      "blur_kernel": 11,
+      "canny_low": 50,
+      "canny_high": 150,
+      "hough_threshold": 15,
+      "min_line_length": 20,
+      "max_line_gap": 10,
+      "consensus_distance": 0.008,
+      "min_vertical_span": 0.08,
+      "foreground_y": 0.7,
+      "max_lines": 4,
+      "max_candidates": 160,
+      "association_gate": 0.1,
+      "smoothing_seconds": 0.08,
+      "confirm_hits": 3,
+      "hold_seconds": 0.15,
+      "reset_gap_seconds": 0.5,
+      "min_confidence": 0.25,
+      "max_frame_age_seconds": 0.25,
+      "color_bounds": {
+        "article_hsl_white": [
+          [
+            0,
+            200,
+            0
+          ],
+          [
+            180,
+            255,
+            255
+          ]
+        ],
+        "previous_hsv": [
+          [
+            0,
+            0,
+            195
+          ],
+          [
+            180,
+            30,
+            255
+          ]
+        ],
+        "saved_hsl": [
+          [
+            0,
+            59,
+            0
+          ],
+          [
+            36,
+            205,
+            40
+          ]
+        ]
+      }
+    },
+    "detail": {
+      "backend": "marvin_ridge",
+      "camera": "marvin_front",
+      "line_width_min_m": 0.025,
+      "line_width_max_m": 0.15,
+      "minimum_length_m": 0.3,
+      "maximum_range_m": 12.0,
+      "ridge_threshold_high": 0.22,
+      "ridge_threshold_low": 0.1,
+      "side_log_threshold": 0.1,
+      "use_depth_gate": true,
+      "ground_live": true,
+      "ground_every": 15,
+      "depth_confirm": 0.5,
+      "object_height_m": 0.04,
+      "depth_vote": 0.3,
+      "metric_association_gate_m": 0.35,
+      "tracking_enabled": true,
+      "component_policy": "diagnostic",
+      "image_roi": [
+        [
+          0,
+          0.55
+        ],
+        [
+          1,
+          0.55
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "calibration_verified": false,
+      "calibration_id": "",
+      "ground_frame_id": "",
+      "mode": "article_hsl_white",
+      "processing_width": 960,
+      "roi_top": 0.4,
+      "roi_shape": "rectangle",
+      "blur_kernel": 11,
+      "canny_low": 50,
+      "canny_high": 150,
+      "hough_threshold": 15,
+      "min_line_length": 20,
+      "max_line_gap": 10,
+      "consensus_distance": 0.008,
+      "min_vertical_span": 0.08,
+      "foreground_y": 0.7,
+      "max_lines": 4,
+      "max_candidates": 160,
+      "association_gate": 0.1,
+      "smoothing_seconds": 0.08,
+      "confirm_hits": 3,
+      "hold_seconds": 0.15,
+      "reset_gap_seconds": 0.5,
+      "min_confidence": 0.25,
+      "max_frame_age_seconds": 0.25,
+      "color_bounds": {
+        "article_hsl_white": [
+          [
+            0,
+            200,
+            0
+          ],
+          [
+            180,
+            255,
+            255
+          ]
+        ],
+        "previous_hsv": [
+          [
+            0,
+            0,
+            195
+          ],
+          [
+            180,
+            30,
+            255
+          ]
+        ],
+        "saved_hsl": [
+          [
+            0,
+            59,
+            0
+          ],
+          [
+            36,
+            205,
+            40
+          ]
+        ]
+      }
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "empty_masks": 32,
+      "frames_with_confirmed_candidates": 1018,
+      "navigation_eligible_frames": 0,
+      "mean_detector_ms": 49.62548645640786,
+      "p95_detector_ms": 68.12410499951511
+    },
+    "detail": {
+      "empty_masks": 3,
+      "frames_with_confirmed_candidates": 1073,
+      "navigation_eligible_frames": 0,
+      "mean_detector_ms": 225.9778182746103,
+      "p95_detector_ms": 294.96642500016605
+    }
+  },
+  "empty_to_nonempty": 32,
+  "nonempty_to_empty": 3,
+  "note": "Unlabeled output/CPU review, not accuracy. Nonempty masks can be false positives. Pixel counts across processing sizes are not directly comparable. Nominal replay timestamps; no physical throughput claim. Full-frame filters precede the configured crop. Gallery includes uniform frames and all empty/nonempty transitions; not an unbiased accuracy sample."
+}

@@ -100,7 +100,15 @@ class PhysicalDetector:
         estimate=dict(height_m=float(height),pitch_deg=float(pitch),live=self.estimate is not None,fit_accepted=fit_accepted,
                       depth_available=d is not None,depth_gate_applied=use_depth is not None,
                       coordinates='X forward, Y left, Z up; metres')
+        # Counts inspect the same configured region at each actual filtering step.
+        # Connected-component decisions still use full-frame connectivity upstream.
+        gate_masks=dict(ridge_candidates=(info['best']>=cfg.ridge_threshold_low)&det.ground,
+                        side_darkness=info['side_gate'],color=info['color_gate'],width=info['good'],
+                        hysteresis=info['hysteresis_mask'],shade=info['shade_mask'],
+                        length=info['length_mask'],depth=info['depth_mask'])
+        gate_pixels={name:int(np.count_nonzero(value & (region>0))) for name,value in gate_masks.items()}
+        gate_pixels['final_dilated']=int(np.count_nonzero(mask))
         return FrameResult(img,observations,stages,((det.ground & (region>0)).astype(np.uint8)*255),(time.perf_counter()-start)*1000,0,
                            mask.astype(np.uint8)*255,'marvin_ridge',estimate,
-                           dict(component_policy=cfg.component_policy,components=component_diagnostics,image_roi_applied=bool(cfg.image_roi),roi_removed_mask_pixels=ungated_pixels-int(np.count_nonzero(mask))),
+                           dict(component_policy=cfg.component_policy,components=component_diagnostics,image_roi_applied=bool(cfg.image_roi),roi_removed_mask_pixels=ungated_pixels-int(np.count_nonzero(mask)),gate_pixels=gate_pixels),
                            labels,confirmed.astype(np.uint8)*255,depth_points)

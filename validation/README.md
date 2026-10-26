@@ -6,10 +6,11 @@ These checked-in records preserve measurements and source provenance. New experi
 
 | Record | Meaning |
 | --- | --- |
+| [Detail-profile summary](detail_review_summary.json) and [per-frame trace](detail_review_frames.jsonl) | Same 1,078 frames at 480/960 px, gate losses and CPU timings; not labeled accuracy |
 | [Full-recording summary](full_recording_summary.json) and [per-frame trace](full_recording_frames.jsonl) | All 1,078 local frames; runtime/output gaps and selected review queue, no reviewed accuracy labels |
 | [Ground improvement audit](ground_improvement.json) | Five-image sparse audit and 120-frame sequential smoke |
 
-Read the [full-recording report](../docs/FULL_RECORDING_REVIEW.md), [ground improvement report](../docs/GROUND_IMPROVEMENT.md) and [labeling workflow](../docs/EVALUATION_WORKFLOW.md) to interpret these records.
+Read the [detail-profile investigation](../docs/DETECTION_DETAIL_REVIEW.md), [full-recording report](../docs/FULL_RECORDING_REVIEW.md), [ground improvement report](../docs/GROUND_IMPROVEMENT.md) and [labeling workflow](../docs/EVALUATION_WORKFLOW.md) to interpret these records.
 
 ## Historical snapshots
 

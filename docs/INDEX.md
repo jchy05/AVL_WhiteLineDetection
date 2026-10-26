@@ -12,6 +12,8 @@ Read the **current guides** first. Earlier comparison reports are preserved as d
 
 ## Evaluation and next improvements
 
+- [Detailed detection review](DETECTION_DETAIL_REVIEW.md): why the 480 px profile misses paint, a slower 960 px option, and full-recording comparisons.
+
 - [Full 1,078-frame review](FULL_RECORDING_REVIEW.md): output gaps, review queue and current limits.
 - [Raw-image labeling and scoring](EVALUATION_WORKFLOW.md): human-reviewed centerlines, strict thresholds, frozen predictions and comparison policy.
 

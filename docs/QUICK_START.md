@@ -28,10 +28,13 @@ The window shows raw input, selected inspection stage and tracked **candidates**
 | --- | --- |
 | `lane_pipeline_viewer.py examples/raw` | Original AVL program, unchanged native-resolution results |
 | `--config config/marvin_ridge.json` | Full-frame Marvin-compatible RGB segmentation baseline |
-| `--config config/recording_review.json` | Recording-specific lower-45% crop to suppress upper background candidates |
+| `--config config/recording_review.json` | Recording-specific lower-45% crop to suppress upper background candidates at 480 px |
+| `--config config/recording_detail.json` | Same crop and filters at 960 px; slower detailed inspection |
 | `--config config/marvin_ridge_strict.json` | Extra component rejection experiment; can lose paint under wrong calibration |
 
 The recording crop deliberately drops far-field image content, including distant paint. It is not ground recognition and is not the robot profile. The example camera model is unverified for the recording. Candidate lines can exist while **navigation is blocked**, which is expected without measured calibration and registered depth. Tracking three hits does not make a tree into a road boundary.
+
+For a closer look at paint missed by the 480 px profile, use `config/recording_detail.json` with the same viewer/export commands. The [detail investigation](DETECTION_DETAIL_REVIEW.md) explains recovered paint, remaining errors and speed cost.
 
 ## Headless export
 

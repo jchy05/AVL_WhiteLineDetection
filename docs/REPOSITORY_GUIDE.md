@@ -63,6 +63,8 @@ The strict PNG-byte check is a local reproducibility check; CI requires original
 
 `validation/full_recording_summary.json` and `full_recording_frames.jsonl` record the latest full-recording review; `ground_improvement.json` records the sparse audit/runtime smoke. See the [validation index](../validation/README.md) and [historical archive](history/README.md). Annotation templates live in `scripts/label_editor/`; generated review sets contain their own `labeling/` folder with native images and labels. Generated current visual galleries go under `results/` or a user-selected output directory.
 
+The [detail review](DETECTION_DETAIL_REVIEW.md) documents the optional 960 px inspection profile and additive gate diagnostics. Its numerical comparison record is indexed under [validation](../validation/README.md).
+
 ## Maintenance
 
 Keep candidate evidence separate from navigation evidence. Add regression scenes for a real failure before changing segmentation thresholds. Run original references to protect the user's earlier program. Document calibration assumptions, mask-versus-fit comparisons and missing ground truth alongside new metrics. Avoid claiming an accuracy improvement from a crop count or a synthetic fixture alone.

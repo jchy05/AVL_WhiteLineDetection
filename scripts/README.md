@@ -18,6 +18,7 @@ The strict byte check protects the saved original outputs on the reference envir
 | Tool | Purpose |
 | --- | --- |
 | `audit_ground_outputs.py` | Sparse candidate/navigation audit and sequential smoke measurements |
+| `compare_review_profiles.py` | Compare baseline/detail profiles over a recording; export gate counts, timings and candidate galleries |
 | `review_recording.py` | Review a recording and export selected raw images plus a labeling gallery |
 | `label_editor/index.html`, `label_editor/editor.js` | Editor template copied into each generated review set |
 | `score_boundaries.py` | Score reviewed centerlines and save/re-score frozen predictions |

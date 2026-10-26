@@ -9,7 +9,7 @@ python -m pytest tests -q
 | Area | Test modules |
 | --- | --- |
 | Original viewer, controls and saved assets | `test_original_viewer.py`, `test_viewer_controls.py`, `test_examples.py` |
-| Detection and Marvin mask parity | `test_detector.py`, `test_ridge.py`, `test_segmentation_parity.py` |
+| Detection and Marvin mask parity | `test_detector.py`, `test_ridge.py`, `test_segmentation_parity.py`, `test_detection_diagnostics.py` |
 | Tracking and timestamps | `test_tracking.py`, `test_freshness.py` |
 | Navigation and integration contracts | `test_navigation.py`, `test_physical_integration.py`, `test_ros_adapter_contract.py` |
 | CLI and exports | `test_cli.py` |

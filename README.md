@@ -32,7 +32,8 @@ The sample recording has no verified calibration/depth, so navigation is **expec
 | --- | --- |
 | `lane_pipeline_viewer.py examples/raw` | Original AVL native-resolution baseline, unchanged |
 | `config/marvin_ridge.json` | Full-frame Marvin-compatible RGB comparison |
-| `config/recording_review.json` | Recording-specific road-region inspection |
+| `config/recording_review.json` | Recording-specific road-region inspection at 480 px |
+| `config/recording_detail.json` | Slower inspection at 960 px, recovering paint missed in investigated frames |
 | `config/legacy_hough.json` | Tracked HSL/HSV + Hough comparison |
 | `config/hybrid_fallback.json` | Explicit discounted Hough fallback; fallback never qualifies for navigation |
 | `config/robot_templates/` | Per-camera templates to replace with measured robot data |
@@ -44,6 +45,8 @@ The package default remains legacy Hough for compatibility; use an explicit prof
 [Current validation report](docs/GROUND_IMPROVEMENT.md) includes the five-frame sparse audit, 120-frame sequential smoke, test coverage, CPU timings and known limits. These are not representative real-world precision/recall or robot performance claims. Full-frame RGB parity with Marvin and all original reference outputs remain regression checks.
 
 Physical ROS/ZED registration, TF placement, the downstream planner interlock, Jetson load and controlled robot operation still require hardware validation. [Robot setup](docs/ROBOT_SETUP.md) uses separate local camera files and image/CameraInfo/depth topics.
+
+For the known missed-paint frames, see the [detailed detection investigation](docs/DETECTION_DETAIL_REVIEW.md). The slower detail profile changes resolution only; it is not a calibrated robot profile.
 
 ## Measure the next improvement
 

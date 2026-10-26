@@ -250,6 +250,8 @@ class WhiteRidgeDetector:
         else:
             mask = good
 
+        hysteresis_mask = mask.copy() if return_debug else None
+        shade_mask = mask.copy() if return_debug else None
         if mask.any():
             n, lab = cv2.connectedComponents(mask.astype(np.uint8), connectivity=8)
             li = lab[mask]
@@ -261,6 +263,8 @@ class WhiteRidgeDetector:
             litref = cv2.resize(q, (W, H), interpolation=cv2.INTER_LINEAR)
             ev_m, above_m = _seg_median(li, shade_map[mask], (logL - litref)[mask], n)
             drop = (ev_m > P['shade_blue']) | ((ev_m > P['shade_weak']) & (above_m < P['lit_margin']))
+            if return_debug:
+                shade_mask = ~drop[lab] & (lab > 0)
             # ground length and image length along the ridge
             thick = np.maximum(w_px[mask], 1.0)
             g_len = np.bincount(li, weights=along_full[mask] / thick, minlength=n)
@@ -299,7 +303,7 @@ class WhiteRidgeDetector:
             mask &= self.ground
 
         if return_debug:
-            return mask, dict(best=best, best_s=best_s, nx=nx, ny=ny, good=good, logL=logL, width_gate=width_gate, side_gate=side_gate, color_gate=color_gate, length_mask=length_mask, depth_mask=depth_mask)
+            return mask, dict(best=best, best_s=best_s, nx=nx, ny=ny, good=good, logL=logL, width_gate=width_gate, side_gate=side_gate, color_gate=color_gate, hysteresis_mask=hysteresis_mask, shade_mask=shade_mask, length_mask=length_mask, depth_mask=depth_mask)
         return mask
 
 

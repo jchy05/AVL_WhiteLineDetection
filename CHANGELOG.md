@@ -1,5 +1,12 @@
 # Change log
 
+## Detection detail investigation — 2026-10-26
+
+- Added an explicit 960 px recording-detail profile with unchanged filtering, crop and navigation requirements.
+- Added per-gate pixel diagnostics to distinguish ridge, color, width, hysteresis, shade, length and depth losses without changing segmentation.
+- Added a reproducible full-recording profile comparison with per-frame trace, source/image hashes, alternating timing order and visual review gallery.
+- Documented known recovered paint, remaining missed dashes/background candidates, runtime cost and the lack of reviewed accuracy scores.
+
 ## Repository organization — 2026-10-26
 
 - Separated historical narrative reports into `docs/history/` and illustrations into `docs/images/`, with forwarding pages at old Markdown URLs.

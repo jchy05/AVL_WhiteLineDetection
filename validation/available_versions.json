@@ -1,0 +1,148 @@
+{
+  "versions": [
+    {
+      "id": "original_article",
+      "title": "Original AVL / Article HSL",
+      "commit": "e23345a857f58eff29bff91e1cd820df839b4539",
+      "kind": "original"
+    },
+    {
+      "id": "original_hsv",
+      "title": "Original AVL / Previous HSV",
+      "commit": "e23345a857f58eff29bff91e1cd820df839b4539",
+      "kind": "original"
+    },
+    {
+      "id": "original_saved_hsl",
+      "title": "Original AVL / Saved HSL",
+      "commit": "e23345a857f58eff29bff91e1cd820df839b4539",
+      "kind": "original"
+    },
+    {
+      "id": "early_hough",
+      "title": "Early tracked AVL / Hough",
+      "commit": "e23345a857f58eff29bff91e1cd820df839b4539",
+      "kind": "hough"
+    },
+    {
+      "id": "marvin",
+      "title": "Standalone Marvin",
+      "commit": "d6aa919877a853511518f556b56d0bec62a4676f",
+      "kind": "marvin"
+    },
+    {
+      "id": "initial_ridge",
+      "title": "Initial AVL ridge integration",
+      "commit": "8fb2b5ee72e94342213aa224f8623d0d8b6d0bdc",
+      "kind": "ridge"
+    },
+    {
+      "id": "corrected_ridge",
+      "title": "Corrected full-frame AVL ridge",
+      "commit": "ea940839f33683f1a5499eab3e7bee63633887a9",
+      "kind": "ridge"
+    },
+    {
+      "id": "review_480",
+      "title": "Current AVL / road crop 480",
+      "commit": "67b53a9d40d300162c3a87904b6df4777d640dc4",
+      "kind": "ridge"
+    },
+    {
+      "id": "detail_960",
+      "title": "Newest AVL / detail 960",
+      "commit": "67b53a9d40d300162c3a87904b6df4777d640dc4",
+      "kind": "ridge"
+    }
+  ],
+  "unavailable": [],
+  "frames": [
+    {
+      "id": "frame_000000",
+      "image_sha256": "a0a3a7f270f4294ac4e62d2e9a6d27287646c824331961054e9f34973ef30fc8"
+    },
+    {
+      "id": "frame_000410",
+      "image_sha256": "3a0b5c26d0ed1447a1e293f731fbc1644e78b821b3e7e97bf27b9f310215e988"
+    },
+    {
+      "id": "frame_000474",
+      "image_sha256": "9ca54ab010763c543728294e930eb231e46ab8ad12b81a189aace58baf03fec1"
+    },
+    {
+      "id": "frame_000710",
+      "image_sha256": "5a5d3c6569407c2962e09267475d70fae7c472c40713653538ba521629a8a1a5"
+    },
+    {
+      "id": "frame_001077",
+      "image_sha256": "947a132cf89b6a88d28fdab7fc388dd8f74d24bcf176b1a369f7e8b8ab9684eb"
+    },
+    {
+      "id": "frame_000386",
+      "image_sha256": "3b2dff6c094f46a4fb42ed178ad8f72bf466b6838b5c0b9bb8e7631e51ac3d7f"
+    },
+    {
+      "id": "frame_000814",
+      "image_sha256": "fd985f6d08f8795566a1ac710a28c13b3d3fafb5a3eec2de95630c214bf7896a"
+    },
+    {
+      "id": "frame_000419",
+      "image_sha256": "ab9d83a40f60b84f21dd1c90cc7c735f7ac4894fd3de9adb641e2efbd1172fee"
+    },
+    {
+      "id": "frame_000422",
+      "image_sha256": "34100f2e632cc04b1b0ad949cd2372fe75c8d2fedddc2e2f8e6b04a4c83d02ac"
+    },
+    {
+      "id": "frame_000423",
+      "image_sha256": "c7209aa97f15740c6a3ea5080ea5c1d10e707fd1c180bd74a3ea414ae1bcc4b1"
+    }
+  ],
+  "note": "Actual code reruns from archived Git commits, current Python/OpenCV. Not historical screenshots or original execution environments. No depth, live ground fitting or temporal tracking. All ridge profiles assume marvin_front, unverified for this footage. Original outputs preserve original rendering; other overlays use cyan to display actual detected segmentation or fitted-line raster. Fits are not semantic masks. No reviewed accuracy scores or ranking. No separate version is invented for documentation-only commits.",
+  "original_saved_reference_checks": {
+    "cases": 15,
+    "all_pixel_identical": true
+  },
+  "marvin_corrected_segmentation_checks": [
+    {
+      "frame": "frame_000000",
+      "identical": true
+    },
+    {
+      "frame": "frame_000410",
+      "identical": true
+    },
+    {
+      "frame": "frame_000474",
+      "identical": true
+    },
+    {
+      "frame": "frame_000710",
+      "identical": true
+    },
+    {
+      "frame": "frame_001077",
+      "identical": true
+    },
+    {
+      "frame": "frame_000386",
+      "identical": true
+    },
+    {
+      "frame": "frame_000814",
+      "identical": true
+    },
+    {
+      "frame": "frame_000419",
+      "identical": true
+    },
+    {
+      "frame": "frame_000422",
+      "identical": true
+    },
+    {
+      "frame": "frame_000423",
+      "identical": true
+    }
+  ]
+}

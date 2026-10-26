@@ -33,6 +33,7 @@ Follow the [labeling workflow](../docs/EVALUATION_WORKFLOW.md) for exact command
 | `generate_examples.py` | Explicitly regenerate original example assets; not part of routine processing |
 | `benchmark_backends.py` | Synthetic backend comparison; defaults to ignored `results/backend_benchmark.json` |
 | `compare_marvin_avl.py` | Direct comparison with a separately supplied Marvin checkout |
+| `compare_available_versions.py`, `version_gallery.html` | Isolated reruns of available historical commits/current profiles and an offline comparison gallery |
 | `compare_three_versions.py` | Compare Marvin, the original viewer and the tracked implementation |
 
 Comparison fixtures need the test extra. Read the [historical reports](../docs/history/README.md) for the settings and limits of past runs; their checked-in JSON records are frozen snapshots.

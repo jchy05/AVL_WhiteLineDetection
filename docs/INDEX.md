@@ -12,6 +12,8 @@ Read the **current guides** first. Earlier comparison reports are preserved as d
 
 ## Evaluation and next improvements
 
+- [Available version comparison](AVAILABLE_VERSIONS.md): actual reruns of original presets, historical implementations, Marvin and current profiles, with source verification.
+
 - [Detailed detection review](DETECTION_DETAIL_REVIEW.md): why the 480 px profile misses paint, a slower 960 px option, and full-recording comparisons.
 
 - [Full 1,078-frame review](FULL_RECORDING_REVIEW.md): output gaps, review queue and current limits.

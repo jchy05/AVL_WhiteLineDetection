@@ -6,6 +6,7 @@ These checked-in records preserve measurements and source provenance. New experi
 
 | Record | Meaning |
 | --- | --- |
+| [Available-version manifest](available_versions.json) | Nine available presets/versions, ten local input hashes and verified original/Marvin parity checks; no accuracy scores |
 | [Detail-profile summary](detail_review_summary.json) and [per-frame trace](detail_review_frames.jsonl) | Same 1,078 frames at 480/960 px, gate losses and CPU timings; not labeled accuracy |
 | [Full-recording summary](full_recording_summary.json) and [per-frame trace](full_recording_frames.jsonl) | All 1,078 local frames; runtime/output gaps and selected review queue, no reviewed accuracy labels |
 | [Ground improvement audit](ground_improvement.json) | Five-image sparse audit and 120-frame sequential smoke |

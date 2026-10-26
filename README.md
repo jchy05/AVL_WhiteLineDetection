@@ -52,6 +52,8 @@ For the known missed-paint frames, see the [detailed detection investigation](do
 
 The [full-recording review](docs/FULL_RECORDING_REVIEW.md) covers all 1,078 local frames and identifies output gaps for inspection. A [label editor and scorer](docs/EVALUATION_WORKFLOW.md) now support reviewed paint centerlines, the <10 px / <2 degree criterion, and frozen prediction comparisons. Unreviewed drafts never count as accuracy ground truth.
 
+[Compare available versions](docs/AVAILABLE_VERSIONS.md) reproduces actual historical code and current profiles on the same images, with no invented results.
+
 ## Find the code and history
 
 - `src/avl_white_lines/`: detector, camera/region geometry, depth/component metadata, tracking, navigation gates, CLI and ROS adapter.

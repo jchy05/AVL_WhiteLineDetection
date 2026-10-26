@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Available AVL and Marvin versions</title>
+<style>
+body{margin:0;background:#111820;color:#e9eef5;font:16px system-ui}main{max-width:1800px;margin:auto;padding:24px}h1{margin:0 0 10px;font-size:28px}p{line-height:1.5;max-width:1250px;color:#c4ceda}a{color:#92d5ff}button,select{font:inherit;color:#e9eef5;background:#223040;border:1px solid #718297;border-radius:6px;padding:9px}button{cursor:pointer}nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:15px 0;position:sticky;top:0;background:#111820;z-index:1}label{display:flex;align-items:center;gap:7px}#grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}#grid.pair{grid-template-columns:repeat(2,minmax(0,1fr))}article{background:#1c2835;border:1px solid #384a60;border-radius:9px;overflow:hidden}h2{font-size:17px;margin:12px 14px 4px}.meta{font-size:13px;padding:0 14px 12px;line-height:1.5;color:#afbecd}img{width:100%;display:block}#pairs{display:none;gap:12px;flex-wrap:wrap;margin:0 0 18px}details{margin-top:22px}summary{cursor:pointer}#notice{color:#f2ca83}@media(max-width:1000px){#grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){#grid,#grid.pair{grid-template-columns:1fr}main{padding:14px}nav{position:static}}
+</style>
+<main>
+<h1>Available AVL and Marvin versions</h1>
+<p>Real detector reruns from preserved Git commits on identical raw images. Each card links to its lossless result and source record. Original AVL keeps its original colors; cyan on other versions shows the actual candidate mask or fitted lines. These are single-frame results, without temporal confirmation, depth or measured accuracy scores.</p>
+<nav aria-label="Comparison controls">
+<button id="prev">A / ← Previous</button><label>Frame <select id="frame"></select></label><button id="next">D / → Next</button>
+<label>Layout <select id="layout"><option value="all">All available versions</option><option value="pair">Compare two</option></select></label>
+<button id="toggle">I / O: show masks</button><a id="sheet" target="_blank" rel="noopener">Open full comparison sheet</a>
+</nav>
+<div id="pairs"><label>Left <select id="left"></select></label><label>Right <select id="right"></select></label></div>
+<p id="status" aria-live="polite"></p><p id="notice"></p><div id="grid"></div>
+<details><summary>Sources, settings and limitations</summary><p id="notes"></p><p>Original/Hough masks are fitted-line drawings, including inferred extensions; ridge masks are segmented candidate pixels. Different processing widths and crops are labeled in each source record. Color or a cleaner picture does not establish correctness. Historical code uses today's installed Python/OpenCV, so this is a reproducible rerun rather than a claim to reproduce its original runtime environment.</p><p><a href="manifest.json">Manifest and frame hashes</a> · <a href="sources/">Archived source copies</a></p><ul id="sources"></ul></details>
+</main>
+<script>
+const manifest=/*MANIFEST*/{};
+const byId=Object.fromEntries(manifest.versions.map(v=>[v.id,v]));
+let index=0,view='overlay';
+const $=id=>document.getElementById(id);
+for(const f of manifest.frames)$('frame').add(new Option(f.id,f.id));
+for(const id of ['left','right']){
+  $(id).add(new Option('Raw original','raw'));
+  for(const v of manifest.versions)$(id).add(new Option(v.title,v.id));
+}
+$('left').value='raw';$('right').value=byId.detail_960?'detail_960':manifest.versions.at(-1).id;
+$('notes').textContent=manifest.note;
+$('notice').textContent=manifest.unavailable.length?'Unavailable versions omitted: '+manifest.unavailable.map(v=>v.title).join(', '):manifest.versions.length+' available configurations reproduced successfully. Documentation-only commits are not presented as new detectors.';
+for(const v of manifest.versions){const li=document.createElement('li'),a=document.createElement('a');a.href=v.id+'_provenance.json';a.textContent=v.title+' — '+v.commit;li.append(a);$('sources').append(li);}
+function card(id,frame){
+  const article=document.createElement('article'),title=document.createElement('h2'),meta=document.createElement('div'),link=document.createElement('a'),img=document.createElement('img');meta.className='meta';
+  title.textContent=id==='raw'?'Raw original':byId[id].title;
+  const file=id==='raw'?'images/'+frame+'/raw.jpg':'images/'+frame+'/'+id+'_'+view+'.png';
+  img.src=file;img.alt=title.textContent+' / '+frame+' / '+(id==='raw'?'raw image':view);link.href=file;link.target='_blank';link.rel='noopener';link.append(img);
+  if(id==='raw')meta.textContent='Unmodified source JPEG · click image for native resolution';
+  else{const v=byId[id],a=document.createElement('a');a.href=id+'_provenance.json';a.textContent=v.commit.slice(0,7)+' · source/config';meta.append(a,document.createTextNode(' · '+(['original','hough'].includes(v.kind)?'fitted line output':'ridge segmentation')));}
+  article.append(title,meta,link);return article;
+}
+function paint(){
+ const frame=manifest.frames[index].id,pair=$('layout').value==='pair';$('frame').value=frame;$('grid').replaceChildren();$('grid').classList.toggle('pair',pair);$('pairs').style.display=pair?'flex':'none';
+ const ids=pair?[$('left').value,$('right').value]:['raw',...manifest.versions.map(v=>v.id)];for(const id of ids)$('grid').append(card(id,frame));
+ $('status').textContent=(index+1)+' / '+manifest.frames.length+' · '+frame+' · '+view+' · click any image to enlarge';$('toggle').textContent='I / O: show '+(view==='overlay'?'masks':'overlays');$('sheet').href=frame+'_'+view+'_all.jpg';
+}
+function move(d){index=(index+d+manifest.frames.length)%manifest.frames.length;paint();}
+function toggle(){view=view==='overlay'?'mask':'overlay';paint();}
+$('prev').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('toggle').onclick=toggle;
+$('frame').onchange=()=>{index=manifest.frames.findIndex(f=>f.id===$('frame').value);paint();};
+for(const id of ['layout','left','right'])$(id).onchange=paint;
+document.addEventListener('keydown',e=>{if(['SELECT','INPUT','TEXTAREA'].includes(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase();if(['a','d','arrowleft','arrowright','i','o'].includes(k))e.preventDefault();if(k==='a'||k==='arrowleft')move(-1);if(k==='d'||k==='arrowright')move(1);if(k==='i'||k==='o')toggle();});paint();
+</script></html>

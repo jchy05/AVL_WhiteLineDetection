@@ -1,5 +1,11 @@
 # Change log
 
+## Available-version comparison — 2026-10-26
+
+- Reran nine available historical/current versions and presets in isolated processes from preserved Git commits on identical raw images.
+- Added an offline all-version/pair gallery with overlays, actual masks/fitted rasters, native outputs and per-version source/configuration records.
+- Verified all 15 original sample references and Marvin/corrected-ridge segmentation equality on ten local frames. No detector changes or invented tracking/accuracy results.
+
 ## Detection detail investigation — 2026-10-26
 
 - Added an explicit 960 px recording-detail profile with unchanged filtering, crop and navigation requirements.

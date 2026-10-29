@@ -57,3 +57,13 @@ Open `results/ground_audit/index.html`. The five samples are widely separated; t
 ## Next steps
 
 [Navigation contract](NAVIGATION_OUTPUTS.md) explains what a robot should consume. [Robot setup](ROBOT_SETUP.md) covers measured intrinsics/mounts and depth. [Documentation map](INDEX.md) separates current guidance from the history.
+
+## Simple original / mask / overlay view
+
+```bash
+python scripts/three_panel_review.py --output results/three_panel_01
+```
+
+Open the generated `index.html`. A/D or arrows changes between the five sample frames. Each row shows the original, the actual final binary candidate mask and a cyan mask overlay. Individual full-resolution originals/masks/overlays and the exact processing-resolution mask are also saved. The original raw file is copied unchanged. Mask resizing uses nearest-neighbor interpolation, preserving binary values.
+
+This uses `config/recording_detail.json` by default. Supply `--config config/recording_review.json` for the 480 px option or `--images /path/to/images` for another image folder. Choose a fresh output directory to protect earlier results. These are single-image segmentation outputs, without temporal tracking or invented confirmation; they are not navigation masks. Settings, source/image hashes and rejection diagnostics are saved in `metadata.json`.

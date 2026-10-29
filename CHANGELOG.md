@@ -1,5 +1,10 @@
 # Change log
 
+## Three-panel review — 2026-10-28
+
+- Added a reusable original / actual ridge mask / candidate overlay exporter and offline image browser using the detailed profile.
+- Preserved raw input copies, exact processing masks, native-size binary masks, lossless overlays and source/configuration records. No detector behavior changes or synthetic temporal history.
+
 ## Available-version comparison — 2026-10-26
 
 - Reran nine available historical/current versions and presets in isolated processes from preserved Git commits on identical raw images.

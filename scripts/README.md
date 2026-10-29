@@ -17,6 +17,7 @@ The strict byte check protects the saved original outputs on the reference envir
 
 | Tool | Purpose |
 | --- | --- |
+| `three_panel_review.py` | Export original / final ridge mask / candidate overlay, plus individual images and an offline gallery |
 | `audit_ground_outputs.py` | Sparse candidate/navigation audit and sequential smoke measurements |
 | `compare_review_profiles.py` | Compare baseline/detail profiles over a recording; export gate counts, timings and candidate galleries |
 | `review_recording.py` | Review a recording and export selected raw images plus a labeling gallery |
